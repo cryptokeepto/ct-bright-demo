@@ -1,0 +1,109 @@
+#header {
+  border-bottom-style: solid;
+  border-bottom-color: gray;
+}
+
+.page-name{
+  text-align: center;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 3.5em;
+    background-color: black;
+    text-align: left;
+    display: inline;
+    border-top-style: solid;
+    border-top-color: gray;
+}
+
+/* this is for ticker */
+.ticker{
+  color:white;
+  font-size: 1.5em;
+}
+.ticker-name{
+  color: #7D6642;
+  font-size: 2em;
+  padding-right: 0.25em;
+}
+.ticker-value{
+  color: white;
+  font-size: 2em;
+  padding-right: 0.25em;
+}
+.ticker-pctchange{
+  color: red;
+  font-size: 2em;
+  padding-right: 2em;
+}
+
+/* this is for clock */
+.clock-day{
+  font-size: 1.5em;
+  color: white;
+}
+.clock-time{
+  font-size: 3em;
+  color: white;
+  padding-left: 0.2em;
+  border-left-style: solid;
+  border-left-color: purple;
+}
+
+/* this is for gradient */
+.grad{
+  background: linear-gradient(to right, rgba(90,37,107,1) 0%,rgba(90,37,107,0.99) 1%,rgba(125,185,232,0) 100%);
+  border-top-style: solid;
+  border-top-color: #8E703C;
+  border-top-width: 0.1em;
+  border-bottom-style: solid;
+  border-bottom-color: #8E703C;
+  border-bottom-width: 0.1em;
+  margin-top: 1em;
+  margin-right: 1em;
+  padding-top: 1em;  
+  padding-bottom: 1em;
+  
+}
+.grad-text{
+  color: #7D6642;
+  font-size: 1.5vh;
+}
+.non-grad-text{
+  color: white;
+  font-size: 2.5vh;
+}
+.non-grad-value{
+  color: white;
+  font-size: 1.5vh;
+}
+
+.blue-label{
+  color: #1385B5;
+}
+
+/* this is for table */
+.data-table {
+  background: none;
+}
+.table-header {
+  //border-color: rgba(92, 45, 145, 1) !important;
+  border-bottom: 0.3vh solid rgba(92, 45, 145, 1) !important;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  font-weight: 700;
+  font-size: 2vh;
+  color: #8D734A;
+}
+.align-right {
+  text-align: right;
+}
+.table-text {
+  border: none !important;
+  color: white;
+  font-size: 2.5vh;
+}

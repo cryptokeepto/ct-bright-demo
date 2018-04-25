@@ -1,0 +1,115 @@
+<link rel="import" href="../../bower_components/coral-header/coral-header.html">
+<link rel="import" href="../../bower_components/coral-icon/coral-icon.html">
+<link rel="import" href="../../bower_components/coral-button/coral-button.html">
+
+
+<dom-module id="map-page">
+    <style>
+        :host {
+            display: block;
+        }
+    </style>
+    <template>
+        <nav style="background-color:rgb(77, 77, 77);">
+            <coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
+            <img src="../../images/ct_bright.png" style="width: 180px; height: 30px; margin-left: 450px">
+            <coral-button style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button>
+        </nav>
+        <div style="height: 50px;">
+
+            <ul style="width: 35%; list-style-type: none; margin: 0; margin-left: 450px; overflow: hidden; background-color: #333; text-align: center;">
+                <li style="float: left">
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none; background-color: #650b16;" href="#">Region</a>
+                </li>
+                <li style="float: left">
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Sector</a>
+                </li>
+                <li style="float: left">
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Market Cap</a>
+                </li>
+                <li style="float: left">
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Other Key Metric</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="container" style="width: 100%; margin-top: 8px;">
+            <div class="map"></div>
+        </div>
+
+    </template>
+    <script>
+
+
+        Polymer({
+            is: 'map-page',
+            properties: {
+
+            },
+
+            attached: function () {
+                //anime.js code
+
+                $(".container").mapael({
+                    map: {
+
+                        name: "world_countries",
+                        zoom: {
+                            enabled: true,
+                            maxLevel: 10
+                        },
+
+                        defaultArea: {
+                            attrs: {
+                                fill: "#cccccc",
+                                stroke: "#cccccc"
+                            },
+                            eventHandlers: {
+                                click: function (e, id, mapElem, textElem) {
+                                    console.log(mapElem)
+
+                                }
+                            }
+                        }
+
+
+                    },
+                    plots: {
+                        // Image plot
+                        'paris': {
+                            type: "image",
+                            url: "http://www.neveldo.fr/mapael/assets/img/marker.png",
+                            width: 12,
+                            height: 40,
+                            latitude: 48.86,
+                            longitude: 2.3444,
+                            attrs: {
+                                opacity: 1
+                            },
+                            attrsHover: {
+                                transform: "s1.5"
+                            }
+                        }
+
+                    },
+                    areas: {
+                        "US": {
+                            "value": "311591917",
+                            "href": "#",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">United States<\/span><br \/>Population : 311591917"
+                            }
+                        }
+                    }
+
+                });
+            }
+
+
+        });
+
+
+
+    </script>
+</dom-module>

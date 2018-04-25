@@ -1,0 +1,343 @@
+
+<link rel="import" href="../../bower_components/coral-header/coral-header.html">
+<link rel="import" href="../../bower_components/coral-icon/coral-icon.html">
+<link rel="import" href="../../bower_components/coral-button/coral-button.html">
+
+<link rel="import" href="index-quote.html">
+<link rel="import" href="bond-quote.html">
+<link rel="import" href="fx-quote.html">
+<link rel="import" href="realtime-data.html">
+
+<dom-module id="overview-page">
+<template>
+  <style>
+    :host {
+      display: block;
+    }
+    /* .app-title {
+      justify-content: space-between;
+      display: inline-flex;
+      width: 100%;
+    } */
+  </style>
+
+  <!-- <quartz-layout flex container>
+    <quartz-layout> -->
+        <div class="row container-fluid" style="height: 75vh">
+          <template is="dom-repeat" items="{{datatable}}">
+            <div class="row" style="height: 20%">
+              <div class="col-xs-3">
+                <index-quote ric$="{{item.indices.ric}}" flag="{{item.indices.flag}}" title="{{item.indices.title}}"></index-quote>
+              </div>
+              <div class="col-xs-3">
+                <fx-quote ric$="{{item.currencies.ric}}" flag="{{item.currencies.flag}}" title="{{item.currencies.title}}"></fx-quote>
+              </div>
+              <div class="col-xs-3">
+                <bond-quote ric$="{{item.bonds.ric}}" title="{{item.bonds.title}}"></bond-quote>
+              </div>
+              <div class="col-xs-3">
+                <index-quote ric$="{{item.commodities.ric}}" title="{{item.commodities.title}}"></index-quote>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <realtime-data
+        id="realtimeData"
+        rics="[[_computeRics(indices)]]"
+        fields="[[realtimeFields]]"></realtime-data>
+
+        <realtime-data
+        id="currencyData"
+        rics="[[_computeRics(currencies)]]"
+        fields="[[currencyFields]]"></realtime-data>
+
+        <realtime-data
+        id="commoditiesData"
+        rics="[[_computeRics(commodities)]]"
+        fields="[[realtimeFields]]"></realtime-data>
+
+        <realtime-data
+        id="bondsData"
+        rics="[[_computeRics(bonds)]]"
+        fields="[[bondFields]]"></realtime-data>
+
+
+    <!-- </quartz-layout>
+  </quartz-layout> -->
+
+</template>
+<script>
+
+  (function() {
+
+    Polymer({
+      is: 'overview-page',
+      properties: {
+        datatable: {
+          type: Array,
+        },
+        indices: {
+            type: Array,
+            // value: function() {
+            //     return [
+            //         {ric:'.SETI', flag:'th', title:'SET'},
+            //         {ric:'.SPX', flag: 'us', title:'S&P500'}
+            //     ];
+            // }
+        },
+        realtimeFields: {
+          type: Array,
+          // value: function() {
+          //     return [
+          //         'CF_LAST',
+          //         'CF_NETCHNG',
+          //         'PCTCHNG'
+          //     ];
+          // }
+        },
+        setIndexData: {
+          type: Object,
+          value: function() {
+            return {
+              lastPrice: 'N/A',
+              netChange: 'N/A',
+              percentChange: 'N/A'
+            }
+          }
+        }
+      },
+      listeners: {
+        //   'static-data-update': '_onStaticDataUpdate',
+           'realtimeData.realtime-data-update': '_onRealtimeDataUpdate',
+           'currencyData.realtime-data-update': '_onCurrencyDataUpdate',
+           'commoditiesData.realtime-data-update': '_onCommoditiesDataUpdate',
+           'bondsData.realtime-data-update': '_onBondsDataUpdate'
+        //   'adc-data-update': '_onAdcDataUpdate',
+        //   'cell-clicked': '_onCellClicked'
+      },
+
+      ready: function() {
+        //this.$.realtimeData.start();
+
+        this.indices = [
+                    {ric:'.SETI', flag:'th', title:'SET'},
+                    {ric:'.SPX', flag: 'us', title:'S&P500'},
+                    {ric:'.N225', flag: 'jp', title:'NIKKEI'},
+                    {ric:'.HSCE', flag: 'hk', title:'HSCE'},
+                    {ric:'.KS11', flag: 'kr', title:'KOSPI'},
+                ];
+
+                this.currencies = [
+                    {ric:'USD=', flag:'th', title:'USD / THB'},
+                    {ric:'EURTHB=', flag: 'eu', title:'EUR / THB'},
+                    {ric:'JPYTHB=', flag: 'jp', title:'JPY / THB'},
+                    {ric:'GBPTHB=', flag: 'gb', title:'GBP /THB'},
+                    {ric:'CHFTHB=', flag: 'ch', title:'CHF / THB'},
+                ];
+
+                this.commodities = [
+                    {ric:'XAU=X', title:'GOLD'},
+                    {ric:'LCOc1', title:'BRENT CRUDE CONTRACT'},
+                    {ric:'CLc1', title:'WTI'},
+                    {ric:'XAG=', title:'Silver'},
+                    {ric:'XPT=', title:'Platinum'},
+                ];
+
+                this.bonds = [
+                    {ric:'TH2YT=RR', title:'THAILAND GOVT DEBT - 2Y'},
+                    {ric:'TH5YT=RR', title:'THAILAND GOVT DEBT - 5Y'},
+                    {ric:'TH7YT=RR', title:'THAILAND GOVT DEBT - 7Y'},
+                    {ric:'US5YT=RR', title:'UNITED STATES GOVT DEBT - 5Y'},
+                    {ric:'US10YT=RR', title:'UNITED STATES GOVT DEBT - 10Y'},
+                ];
+
+        this.realtimeFields = [
+                  'CF_LAST',
+                  'CF_NETCHNG',
+                  'PCTCHNG'
+              ];
+
+              this.currencyFields = [
+                  'CF_BID',
+                  'CF_ASK',
+                  'CF_HIGH',
+                  'CF_LOW'
+              ];
+
+              this.bondFields = [
+                  'CF_LAST',
+                  'CF_CLOSE'
+              ];
+
+        this.datatable = [
+          { indices: this.indices[0], currencies: this.currencies[0], bonds: this.bonds[0], commodities: this.commodities[0] },
+          { indices: this.indices[1], currencies: this.currencies[1], bonds: this.bonds[1], commodities: this.commodities[1] },
+          { indices: this.indices[2], currencies: this.currencies[2], bonds: this.bonds[2], commodities: this.commodities[2] },
+          { indices: this.indices[3], currencies: this.currencies[3], bonds: this.bonds[3], commodities: this.commodities[3] },
+          { indices: this.indices[4], currencies: this.currencies[4], bonds: this.bonds[4], commodities: this.commodities[4] }
+
+        ];
+      },
+
+      startSubscription: function() {
+
+        var elements = Polymer.dom(this.root).querySelectorAll('realtime-data');
+
+        for (var index = 0; index < elements.length; index++) {
+          var item = elements[index];
+
+          item.startSubscription(index);
+          
+        }
+      },
+
+      stopSubscription: function() {
+        var elements = Polymer.dom(this.root).querySelectorAll('realtime-data');
+
+        for (var index = 0; index < elements.length; index++) {
+          var item = elements[index];
+
+          item.stopSubscription(index);
+          
+        }
+      },
+
+      _computeRics: function(indices) {
+        var rics = [];
+
+        for (var index = 0; index < indices.length; index++) {
+          rics.push(indices[index].ric);
+          
+        }
+
+        return rics;
+      },
+
+      _onBondsDataUpdate: function(e) {
+        var realtime = e.detail.value;
+
+        var el = Polymer.dom(this.root).querySelector('[ric="' + realtime.ric + '"]');
+
+
+        if (el) {
+          var data = realtime.data;
+
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            switch(key) {
+                case 'CF_LAST':
+                    el.lastPrice = data[key].formatted;
+                    break;
+                case 'CF_CLOSE':
+                    el.histClose = data[key].formatted;
+                    break;
+                default:
+                    
+            }
+          }
+        }
+        }
+      },
+
+      _onCurrencyDataUpdate: function(e) {
+        var realtime = e.detail.value;
+
+        var el = Polymer.dom(this.root).querySelector('[ric="' + realtime.ric + '"]');
+
+        if (el) {
+          var data = realtime.data;
+
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            switch(key) {
+                case 'CF_BID':
+                    el.bid = data[key].formatted;
+                    break;
+                case 'CF_ASK':
+                    el.ask = data[key].formatted;
+                    break;
+                case 'CF_HIGH':
+                    el.high = data[key].formatted;
+                    break;
+                case 'CF_LOW':
+                    el.low = data[key].formatted;
+                    break;
+                default:
+                    
+            }
+          }
+        }
+        }
+      },
+
+      _onCommoditiesDataUpdate: function(e) {
+        
+
+        
+
+        var realtime = e.detail.value;
+
+        var el = Polymer.dom(this.root).querySelector('[ric="' + realtime.ric + '"]');
+
+        if (el) {
+          var data = realtime.data;
+
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            switch(key) {
+                case 'CF_LAST':
+                    el.lastPrice = data[key].formatted;
+                    break;
+                case 'CF_NETCHNG':
+                    el.netChange = data[key].formatted;
+                    break;
+                case 'PCTCHNG':
+                    el.percentChange = data[key].formatted;
+                    break;
+                default:
+                    
+            }
+          }
+        }
+        }
+
+      },
+
+      _onRealtimeDataUpdate: function(e) {
+        //console.log(e.detail);
+        var realtime = e.detail.value;
+
+        var el = Polymer.dom(this.root).querySelector('[ric="' + realtime.ric + '"]');
+
+        if (el) {
+          var data = realtime.data;
+
+          for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+              switch(key) {
+                  case 'CF_LAST':
+                      el.lastPrice = data[key].formatted;
+                      break;
+                  case 'CF_NETCHNG':
+                      el.netChange = data[key].formatted;
+                      break;
+                  case 'PCTCHNG':
+                      el.percentChange = data[key].formatted;
+                      break;
+                  default:
+                      
+              }
+            }
+          }
+        }
+
+        
+        
+
+      }
+    });
+
+  })();
+</script>
+</dom-module>

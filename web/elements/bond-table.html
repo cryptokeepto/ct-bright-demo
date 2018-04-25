@@ -1,0 +1,52 @@
+
+
+
+<dom-module id="bond-table">
+  <template>
+     <style>
+
+    </style>   
+    <div class="table-responsive">
+        <table class="data-table table">
+            <thead>
+                <th class="table-header">THAILAND GOVT DEBT</th>
+                <th class="table-header align-right">LAST</th>
+                <th class="table-header align-right">HISTORICAL CLOSE</th>
+            </thead>
+            <tbody>
+                <template is="dom-repeat" items="{{content}}">
+                    <tr id$="[[item.ric]]">
+                        <td class="ric table-text">[[item.display]]</td>
+                        <td class="lastPrice table-text align-right"></td>
+                        <td class="closePrice table-text align-right"></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: 'bond-table',
+
+    properties: {
+      content: Array
+    },
+
+    addData: function(data, ric, field) {
+        var cell = document.getElementById(ric).querySelector('.'+field);
+        cell.innerHTML = data;
+        console.log(cell);        
+
+    }
+    
+
+
+
+  });
+
+</script>

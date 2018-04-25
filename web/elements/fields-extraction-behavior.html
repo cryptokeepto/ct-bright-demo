@@ -1,0 +1,16 @@
+
+<script>
+    FieldsExtractionBehavior = {
+
+      _extractFields: function(fieldList) {
+        var result = [];
+        
+        for (i = 0; i < fieldList.length; i++) {
+          result.push(fieldList[i].info.field);
+        }
+
+        return result;
+      }
+
+    };
+</script>

@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/coral-icon/coral-icon.html">
+<link rel="import" href="../../bower_components/coral-flag/coral-flag.html">
+
+<dom-module id="fx-quote">
+  <template>
+     <style>
+      
+    </style>   
+
+    <div>
+        <div class="row grad">
+            <div class="col-xs-12">
+                <coral-flag flag="[[flag]]" size="medium"></coral-flag>
+                <span class="grad-text">[[title]]</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6"><span class="blue-label">Bid / Ask</span></div>
+            <div class="col-xs-3">
+                <div class="row"><span class="blue-label">High</span></div>
+            </div>
+            <div class="col-xs-3">
+                <div class="row">[[high]]</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6"><span class="non-grad-text">[[bid]] / [[ask]]</span></div>
+            <div class="col-xs-3">
+                <div class="row"><span class="blue-label">Low</span></div>
+            </div>
+            <div class="col-xs-3">
+                <div class="row">[[low]]</div>
+            </div>
+        </div>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: 'fx-quote',
+
+    properties: {
+      ric: {
+        type: String,
+        reflectToAttribute: true
+      },
+      flag: String,
+      title: String,
+
+      bid: String,
+      ask: String,
+      high: String,
+      low: String
+    }
+
+
+  });
+
+</script>

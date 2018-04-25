@@ -1,0 +1,245 @@
+
+<link rel="import" href="../../bower_components/coral-header/coral-header.html">
+<link rel="import" href="../../bower_components/coral-icon/coral-icon.html">
+<link rel="import" href="../../bower_components/coral-button/coral-button.html">
+
+<link rel="import" href="index-quote.html">
+<link rel="import" href="bond-quote.html">
+<link rel="import" href="fx-quote.html">
+<link rel="import" href="realtime-data.html">
+
+<dom-module id="foreign-exchange">
+<template>
+  <style>
+    :host {
+      display: block;
+    }
+    /* .app-title {
+      justify-content: space-between;
+      display: inline-flex;
+      width: 100%;
+    } */
+  </style>
+
+  <!-- <quartz-layout flex container>
+    <quartz-layout> -->
+        <div class="row container-fluid">
+            <div class="col-xs-3 ">
+        
+                    <template is="dom-repeat" items="{{currencies1}}">
+                            <fx-quote ric$="{{item.ric}}" flag="{{item.flag}}" title="{{item.title}}"></fx-quote>
+                          </template>
+            </div>
+
+            <div class="col-xs-3 ">
+                <template is="dom-repeat" items="{{currencies2}}">
+                    <fx-quote ric$="{{item.ric}}" flag="{{item.flag}}" title="{{item.title}}"></fx-quote>
+                  </template>
+                </div>
+
+            <div class="col-xs-3 ">
+                    <template is="dom-repeat" items="{{currencies3}}">
+                            <fx-quote ric$="{{item.ric}}" flag="{{item.flag}}" title="{{item.title}}"></fx-quote>
+                          </template>
+            </div>
+
+            <div class="col-xs-3 ">
+                    <template is="dom-repeat" items="{{currencies4}}">
+                            <fx-quote ric$="{{item.ric}}" flag="{{item.flag}}" title="{{item.title}}"></fx-quote>
+                          </template>
+            </div>
+
+        </div>
+
+        <realtime-data
+        id="currencyData1"
+        rics="[[_computeRics(currencies1)]]"
+        fields="[[currencyFields]]"></realtime-data>
+
+        <realtime-data
+        id="currencyData2"
+        rics="[[_computeRics(currencies2)]]"
+        fields="[[currencyFields]]"></realtime-data>
+
+        <realtime-data
+        id="currencyData3"
+        rics="[[_computeRics(currencies3)]]"
+        fields="[[currencyFields]]"></realtime-data>
+
+        <realtime-data
+        id="currencyData4"
+        rics="[[_computeRics(currencies4)]]"
+        fields="[[currencyFields]]"></realtime-data>
+
+
+    <!-- </quartz-layout>
+  </quartz-layout> -->
+
+</template>
+<script>
+
+  (function() {
+
+    Polymer({
+      is: 'foreign-exchange',
+      properties: {
+        indices: {
+            type: Array,
+            // value: function() {
+            //     return [
+            //         {ric:'.SETI', flag:'th', title:'SET'},
+            //         {ric:'.SPX', flag: 'us', title:'S&P500'}
+            //     ];
+            // }
+        },
+        realtimeFields: {
+          type: Array,
+          // value: function() {
+          //     return [
+          //         'CF_LAST',
+          //         'CF_NETCHNG',
+          //         'PCTCHNG'
+          //     ];
+          // }
+        },
+        setIndexData: {
+          type: Object,
+          value: function() {
+            return {
+              lastPrice: 'N/A',
+              netChange: 'N/A',
+              percentChange: 'N/A'
+            }
+          }
+        }
+      },
+      listeners: {
+        //   'static-data-update': '_onStaticDataUpdate',
+        //    'currencyData1.realtime-data-update': '_onCurrencyDataUpdate',
+        //    'currencyData2.realtime-data-update': '_onCurrencyDataUpdate',
+        //    'currencyData3.realtime-data-update': '_onCurrencyDataUpdate',
+        //    'currencyData4.realtime-data-update': '_onCurrencyDataUpdate',
+        'realtime-data-update': '_onCurrencyDataUpdate',
+        //   'adc-data-update': '_onAdcDataUpdate',
+        //   'cell-clicked': '_onCellClicked'
+      },
+
+      ready: function() {
+        //this.$.realtimeData.start();
+
+        
+                this.currencies1 = [
+                    {ric:'USDTHB=VALR', flag:'th', title:'USD / THB'},
+                    {ric:'SGDTHB=', flag: 'sg', title:'SGD / THB'},
+                    {ric:'JPYTHB=', flag: 'jp', title:'JPY / THB'},
+                    {ric:'HKDTHB=', flag: 'hk', title:'HKD /THB'},
+                    {ric:'CNYTHB=', flag: 'cn', title:'CNY / THB'},
+                ];
+                this.currencies2 = [
+                    {ric:'CADTHB=R', flag:'th', title:'CAD / THB'},
+                    {ric:'GBPTHB=', flag: 'gb', title:'GBP / THB'},
+                    {ric:'EURTHB=', flag: 'eu', title:'EUR / THB'},
+                    {ric:'CHFTHB=', flag: 'ch', title:'CHF /THB'},
+                    {ric:'AUDTHB=', flag: 'au', title:'AUD / THB'},
+                ];
+                this.currencies3 = [
+                    {ric:'JPY=', flag:'jp', title:'JPY / USD'},
+                    {ric:'SGD=', flag: 'sg', title:'SGD / USD'},
+                    {ric:'THB=', flag: 'th', title:'THB / USD'},
+                    {ric:'HKD=', flag: 'hk', title:'HKD / USD'},
+                    {ric:'CNY=', flag: 'cn', title:'CNY / USD'},
+                ];
+                this.currencies4 = [
+                    {ric:'EUR=', flag:'eu', title:'EUR / USD'},
+                    {ric:'GBP=', flag: 'gb', title:'GBP / USD'},
+                    {ric:'CAD=', flag: 'ca', title:'CAD / USD'},
+                    {ric:'AUD=', flag: 'au', title:'AUD /USD'},
+                    {ric:'CHF=', flag: 'ch', title:'CHF / USD'},
+                ];
+              this.currencyFields = [
+                  'CF_BID',
+                  'CF_ASK',
+                  'CF_HIGH',
+                  'CF_LOW'
+              ];
+
+              
+      },
+
+      startSubscription: function() {
+        var elements = Polymer.dom(this.root).querySelectorAll('realtime-data');
+
+        for (var index = 0; index < elements.length; index++) {
+          var item = elements[index];
+
+          item.startSubscription(index);
+          
+        }
+      },
+
+      stopSubscription: function() {
+        var elements = Polymer.dom(this.root).querySelectorAll('realtime-data');
+
+        for (var index = 0; index < elements.length; index++) {
+          var item = elements[index];
+
+          item.stopSubscription(index);
+          
+        }
+      },
+
+      _computeRics: function(indices) {
+        var rics = [];
+
+        for (var index = 0; index < indices.length; index++) {
+          rics.push(indices[index].ric);
+          
+        }
+
+        return rics;
+      },
+
+      
+
+      _onCurrencyDataUpdate: function(e) {
+
+        var id = e.target.id;
+
+        var realtime = e.detail.value;
+
+        var el = Polymer.dom(this.root).querySelector('[ric="' + realtime.ric + '"]');
+
+        if (el) {
+          var data = realtime.data;
+
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            switch(key) {
+                case 'CF_BID':
+                    el.bid = data[key].formatted;
+                    break;
+                case 'CF_ASK':
+                    el.ask = data[key].formatted;
+                    break;
+                case 'CF_HIGH':
+                    el.high = data[key].formatted;
+                    break;
+                case 'CF_LOW':
+                    el.low = data[key].formatted;
+                    break;
+                default:
+                    
+            }
+          }
+        }
+        }
+      },
+
+      
+
+      
+    });
+
+  })();
+</script>
+</dom-module>

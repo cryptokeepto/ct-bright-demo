@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SCB Investment Center</title>
+    <!-- Use Polyfill -->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="bower_components/uifr-app/uifr-app.html">
+    <link rel="import" href="bower_components/coral-button/coral-button.html">
+    <link rel="import" href="bower_components/quartz-layout/quartz-layout.html">
+    <link rel="import" href="bower_components/sapphire-chart/sapphire-chart.html">
+    <link rel="import" href="bower_components/coral-flag/coral-flag.html">
+
+    <script src="bower_components/jet-api/dist/JET.min.js"></script>
+    <script src="bower_components/jet-plugin-settings/src/jet-plugin-settings.js"></script>
+    <script src="bower_components/jet-plugin-quotes/src/jet-plugin-quotes.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="mycss.css" rel="stylesheet">
+    <!-- Script -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <!-- User defined scripts -->
+    <script src="js/clock.js"></script>
+
+    <link rel="import" href="web/elements/overview-page.html">
+    <link rel="import" href="web/elements/foreign-exchange.html">
+    <link rel="import" href="web/elements/bond-page.html">
+    <link rel="import" href="web/elements/map-page.html">
+    <link rel="import" href="web/elements/login-page.html">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mapael/2.2.0/js/jquery.mapael.js"></script>
+    <script src="web/maps/world_countries.js" charset="utf-8"></script>
+</head>
+
+<body is="uifr-app" theme="charcoal" locale="en-US" tickcolor="american" unresolved>
+    <div class="main-container"></div>
+
+    <script>
+
+        document.addEventListener('WebComponentsReady', function () {
+
+
+            // initiate JET
+            JET.init({
+                ID: 'scb',
+                Title: "SCB"
+            });
+
+
+            JET.onLoad(function () {
+                console.log('JET is ready.');
+                var login = document.createElement("login-page");
+                document.querySelector(".main-container").appendChild(login);
+
+                login.addEventListener('login-complete', function () {
+                    // delete child element
+                    document.querySelector(".main-container").removeChild(login);
+                    // create element
+                    var map = document.createElement("map-page");
+                    document.querySelector(".main-container").appendChild(map)
+                })
+
+
+                //overview.startSubscription();
+                //switchView();
+
+                //document.querySelector('overview-page').startSubscription();
+            });
+
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>

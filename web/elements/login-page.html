@@ -1,0 +1,93 @@
+<link rel="import" href="../../bower_components/coral-button/coral-button.html">
+<link rel="import" href="../../bower_components/coral-input/coral-input.html">
+
+<dom-module id="login-page">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            .imgcontainer {
+                text-align: center;
+                margin: 24px 0 12px 0;
+                position: relative;
+            }
+
+            img.avatar {
+                width: 40%;
+                border-radius: 50%;
+            }
+
+            .modal-content {
+                background-color: rgb(77, 77, 77);
+                margin: 5% auto 15% auto;
+                /* 5% from the top, 15% from the bottom and centered */
+                width: 30%;
+                /* Could be more or less, depending on screen size */
+            }
+
+            /* Add Zoom Animation */
+
+            .animate {
+                -webkit-animation: animatezoom 0.6s;
+                animation: animatezoom 0.6s
+            }
+
+            .container {
+                padding: 16px;
+            }
+
+        </style>
+
+        <div>
+            <div class="imgcontainer">
+                <img src="../../images/ct_bright.png" alt="logo_ct" class="avatar">
+            </div>
+
+            <form class="modal-content animate">
+                <div class="container">
+                    <h4>Login</h4>
+                    <div>
+                        <label>Username: </label>
+                        &nbsp;
+                        <coral-input size="large" type="text" style="width: 20%;" placeholder="Enter username"></coral-input>
+                    </div>
+                    <div>
+                        <label>Password : </label>
+                        &nbsp;
+                        <coral-input size="large" type="text" style="width: 20%;" placeholder="Enter password"></coral-input>
+                    </div>
+                    <div>
+                        <coral-button type="submit" cta on-click="onClicked">Submit</coral-button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+
+    </template>
+    <script>
+
+
+        Polymer({
+            is: 'login-page',
+            properties: {
+
+            },
+
+            onClicked: function () {
+                this.fire('login-complete');
+            },
+
+
+
+
+        });
+
+
+
+    </script>
+</dom-module>

@@ -1,0 +1,14 @@
+{
+  "registry": {
+    "search": [
+      "http://bams-sami-api.int.thomsonreuters.com/artifactory/api/bower/default.bower.global",
+      "https://bower.herokuapp.com"
+    ]
+  },
+  "resolvers": [
+    "bower-art-resolver"
+  ],
+  "proxy": "http://webproxy.int.westgroup.com:80/",
+  "https-proxy": "http://webproxy.int.westgroup.com:80/",
+  "strict-ssl": false
+}

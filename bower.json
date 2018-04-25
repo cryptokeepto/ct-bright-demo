@@ -1,0 +1,32 @@
+{
+  "name": "scb",
+  "authors": [
+    "Veerayut Intorn"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "coral-button": "^1.0.40",
+    "quartz-layout": "^1.1.4",
+    "carbon-sidebar-layout": "^1.1.5",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",
+    "sapphire-chart": "^1.0.51",
+    "coral-flag": "^1.0.8",
+    "jet-api": "^2.3.0",
+    "jet-plugin-settings": "^2.0.6",
+    "jet-plugin-quotes": "^2.1.1",
+    "lodash": "^4.17.4",
+    "coral-input": "^1.0.53"
+  }
+}

@@ -1,0 +1,90 @@
+
+<link rel="import" href="fields-extraction-behavior.html">
+
+<dom-module id="realtime-data">
+    <template>
+    </template>
+
+    <script>
+
+      (function() {
+
+        Polymer({
+          is: 'realtime-data',
+
+          properties: {
+            rics: Array,
+            fields: Array,
+            _realtimeFields: {
+              type: Array
+            }
+          },
+
+          observers: [
+            //'_handleRealtime(rics, fields)'
+          ],
+
+          behaviors: [FieldsExtractionBehavior],
+
+          _handleRealtime: function(rics, fields) {
+            //this._realtimeFields = this._extractFields(fields);
+
+            this.startSubscription(rics, fields);
+          },
+
+          // start: function() {
+          //   this.startSubscription(this.rics, this.fields);
+          // },
+
+          stopSubscription: function(index) {
+            var subscription = JET.Quotes.get('scbSubscription' + index);
+            if (subscription) {
+              subscription.stop();
+              console.log('stop subscription');
+            }
+          },
+
+          // startSubscription: function(rics, fields) {
+          startSubscription: function(index) {
+            var rics = this.rics;
+            var fields = this.fields;
+            var subscription;
+
+            if (rics && fields) {
+              if (rics.length > 0 && fields.length > 0) {
+                if (JET.Quotes.get('scbSubscription' + index) === undefined) {
+                  subscription = JET.Quotes.create('scbSubscription' + index);
+                } else {
+                  subscription = JET.Quotes.get('scbSubscription' + index);
+                }
+                subscription.rics(rics)  
+                            .formattedFields(fields)  
+                            .onUpdate(function(sub, ric, data, rowIndex) {
+                              var fields = Object.keys(data);
+                              var isSubscribedFields = this._checkFields(fields);
+                              if (isSubscribedFields) {
+                                this._onUpdate(ric, data, rowIndex);
+                              }
+                            }.bind(this)) 
+                            .start();
+              }
+            }
+            else {
+              this.fire('error', {error: 'Fail to subscribe realtime data.'});
+            }
+          },
+
+          //Filter out STATUS field
+          _checkFields: function(fields) {
+            var result = _.intersection(fields, this.fields);
+            return result.length > 0 ? true : false;
+          },
+
+          _onUpdate: function(ric, data, rowIndex) {
+            this.fire('realtime-data-update', {value: {ric: ric, data: data, rowIndex: rowIndex}});
+          }
+        });
+
+      })();
+    </script>
+</dom-module>
