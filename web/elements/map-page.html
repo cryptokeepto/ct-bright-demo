@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/coral-header/coral-header.html">
 <link rel="import" href="../../bower_components/coral-icon/coral-icon.html">
 <link rel="import" href="../../bower_components/coral-button/coral-button.html">
+<link rel="import" href="opportunities-view.html">
 
 
 <dom-module id="map-page">
@@ -10,6 +11,7 @@
         }
     </style>
     <template>
+           
         <nav style="background-color:rgb(77, 77, 77);">
             <coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
             <img src="../../images/ct_bright.png" style="width: 180px; height: 30px; margin-left: 450px">
@@ -37,6 +39,8 @@
         <div class="container" style="width: 100%; margin-top: 8px;">
             <div class="map"></div>
         </div>
+
+        <opportunities-view></opportunities-view>
 
     </template>
     <script>
@@ -67,7 +71,7 @@
                             },
                             eventHandlers: {
                                 click: function (e, id, mapElem, textElem) {
-                                    console.log(mapElem)
+                                    document.getElementsByTagName("opportunities-view")[0].show();
 
                                 }
                             }
@@ -92,16 +96,8 @@
                             }
                         }
 
-                    },
-                    areas: {
-                        "US": {
-                            "value": "311591917",
-                            "href": "#",
-                            "tooltip": {
-                                "content": "<span style=\"font-weight:bold;\">United States<\/span><br \/>Population : 311591917"
-                            }
-                        }
                     }
+
 
                 });
             }

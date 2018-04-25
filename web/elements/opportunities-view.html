@@ -1,0 +1,78 @@
+<dom-module id="opportunities-view">
+    <template>
+        <coral-popup-panel id="opportunities" auto-hide modal width="80%" height="80%" style="padding: 10px;">
+            <emerald-grid id="initgrid"></emerald-grid>
+        </coral-popup-panel>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+        is: 'opportunities-view',
+
+        properties: {
+        },
+
+        show: function () {
+            this.$.opportunities.show();
+            this.addDataToTable();
+            this.$.initgrid.api.listen("cellClicked", function(e) {
+                
+                console.log("clicked", e)
+            })
+        },
+
+        
+        addDataToTable: function () {
+            var initgrid = document.getElementById('initgrid');
+            initgrid.config = {
+                columnReorder: true,
+                rowHighlight: true,
+                rowSelection: true,
+                filterRow: true,
+                columns: [
+                    {
+                        id: 'c1',
+                        title: 'Company',
+                        field: 'Company',
+                        sortBy: 'Company',
+                        filterBy: 'Company',
+                        filter: new tr.cgrid.filter.TextBox('String Search', tr.cgrid.filter.CONTAINS)
+                    },
+                    { 
+                        id: 'c2',
+                        title: 'Market Cap', 
+                        field: 'MarketCap', 
+                        sortBy: 'MarketCap',
+                        filterBy: 'MarketCap',
+                        filter: new tr.cgrid.filter.TextBox('String Search', tr.cgrid.filter.CONTAINS)
+                    },
+                    { 
+                        id: 'c3',
+                         title: 'Sector',
+                        field: 'Sector', 
+                        sortBy: 'Sector',
+                        filterBy: 'Sector',
+                        filter: new tr.cgrid.filter.TextBox('String Search', tr.cgrid.filter.CONTAINS)
+                    }
+                ],
+                dataModel: {
+                    fields: ['Company', 'MarketCap', 'Sector'],
+                    format: 'array',
+                    data: [
+                        ['Xiabuxiabu Catering Management China Holdings Co Ltd', "1,980,992,643.00", "Consumer Services"],
+                        ['Virscend Education Co Ltd', "1,945,652,500.00", "Consumer Services"],
+                        ['Bright Scholar Education Holdings Ltd', "1,839,439,142.80", "Consumer Services"],
+                        ['OneSmart International Education Group Ltd', "1,733,577,210.96", "Consumer Services"],
+                        ['China Yuhua Education Corp Ltd', "1,644,585,033.67", "Consumer Services"]
+
+                    ]
+                }
+            }
+        }
+
+    });
+
+</script>
