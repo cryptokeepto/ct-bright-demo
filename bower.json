@@ -33,6 +33,7 @@
     "opal-business-summary": "^1.0.53",
     "opal-company-fundamentals": "^1.0.35",
     "opal-company-header": "^2.0.3",
-    "opal-company-recommendations": "^1.0.43"
+    "opal-company-recommendations": "^1.0.43",
+    "opal-company-peers": "^2.0.1"
   }
 }

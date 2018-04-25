@@ -1,14 +1,10 @@
+
 <dom-module id="opportunities-view">
     <template>
-        <coral-popup-panel id="opportunities" auto-hide modal width="80%" height="80%" style="padding: 10px;">
-            <template is="dom-if" if="[[isTable]]">
-                <div>
+        <coral-popup-panel id="opportunities" modal width="80%" height="80%" style="padding: 10px;">
+            <template is="dom-if" if="[[_computeView(view)]]">
+                <div id="container-wrapper">
                     <emerald-grid id="initgrid"></emerald-grid>
-                </div>
-            </template>
-            <template is="dom-if" if="[[!isTable]]">
-                <div>
-                    <opal-company-header ric="[[selectedRic]]"></opal-company-header>
                 </div>
             </template>
         </coral-popup-panel>
@@ -18,28 +14,56 @@
 
 <script>
 
-    
+
 
     Polymer({
         is: 'opportunities-view',
 
         properties: {
-            isTable: {
+            tableView: {
                 type: Boolean,
-                value: true
+                value: true,
+                //observer: '_onTableViewChanged'
+            },
+
+            selectedRic: String,
+
+            view: {
+                type: String,
+                value: 'table'
             }
+        },
+
+        // _onTableViewChanged: function() {
+        //     if (this.tableView == true) {
+        //         this.addDataToTable();
+        //     }
+
+        // },
+
+        _computeView: function (view) {
+            var result = view == 'table' ? true : false;
+            return result;
         },
 
         show: function () {
             this.$.opportunities.show();
+            // this.tableView = true;
             this.addDataToTable();
+
             this.$$('#initgrid').api.listen("cellClicked", function (e) {
                 var dataRow = e.dataRow.Ric;
                 this.selectedRic = dataRow;
-                this.isTable = false;
-                console.log(this.isTable)
+                const initgrid = document.getElementById("initgrid");
+                document.querySelector("#container-wrapper").removeChild(initgrid); // remote dom
+
+                var detailedView = document.createElement("detailed-view");
+                detailedView.setAttribute("ric", this.selectedRic);
+                document.querySelector("#container-wrapper").appendChild(detailedView);
             }.bind(this))
         },
+
+
 
 
         addDataToTable: function () {
