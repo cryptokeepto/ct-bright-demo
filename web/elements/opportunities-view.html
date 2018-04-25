@@ -1,7 +1,16 @@
 <dom-module id="opportunities-view">
     <template>
         <coral-popup-panel id="opportunities" auto-hide modal width="80%" height="80%" style="padding: 10px;">
-            <emerald-grid id="initgrid"></emerald-grid>
+            <template is="dom-if" if="[[isTable]]">
+                <div>
+                    <emerald-grid id="initgrid"></emerald-grid>
+                </div>
+            </template>
+            <template is="dom-if" if="[[!isTable]]">
+                <div>
+                    <opal-company-header ric="[[selectedRic]]"></opal-company-header>
+                </div>
+            </template>
         </coral-popup-panel>
 
     </template>
@@ -9,22 +18,30 @@
 
 <script>
 
+    
+
     Polymer({
         is: 'opportunities-view',
 
         properties: {
+            isTable: {
+                type: Boolean,
+                value: true
+            }
         },
 
         show: function () {
             this.$.opportunities.show();
             this.addDataToTable();
-            this.$.initgrid.api.listen("cellClicked", function(e) {
-                
-                console.log("clicked", e)
-            })
+            this.$$('#initgrid').api.listen("cellClicked", function (e) {
+                var dataRow = e.dataRow.Ric;
+                this.selectedRic = dataRow;
+                this.isTable = false;
+                console.log(this.isTable)
+            }.bind(this))
         },
 
-        
+
         addDataToTable: function () {
             var initgrid = document.getElementById('initgrid');
             initgrid.config = {
@@ -41,33 +58,39 @@
                         filterBy: 'Company',
                         filter: new tr.cgrid.filter.TextBox('String Search', tr.cgrid.filter.CONTAINS)
                     },
-                    { 
+                    {
                         id: 'c2',
-                        title: 'Market Cap', 
-                        field: 'MarketCap', 
+                        title: 'Market Cap',
+                        field: 'MarketCap',
                         sortBy: 'MarketCap',
                         filterBy: 'MarketCap',
                         filter: new tr.cgrid.filter.TextBox('String Search', tr.cgrid.filter.CONTAINS)
                     },
-                    { 
+                    {
                         id: 'c3',
-                         title: 'Sector',
-                        field: 'Sector', 
+                        title: 'Sector',
+                        field: 'Sector',
                         sortBy: 'Sector',
                         filterBy: 'Sector',
                         filter: new tr.cgrid.filter.TextBox('String Search', tr.cgrid.filter.CONTAINS)
+                    },
+                    {
+                        id: 'c4',
+                        title: 'Ric',
+                        field: 'Ric',
+                        sortBy: 'Ric',
+                        visible: false
                     }
                 ],
                 dataModel: {
-                    fields: ['Company', 'MarketCap', 'Sector'],
+                    fields: ['Company', 'MarketCap', 'Sector', "Ric"],
                     format: 'array',
                     data: [
-                        ['Xiabuxiabu Catering Management China Holdings Co Ltd', "1,980,992,643.00", "Consumer Services"],
-                        ['Virscend Education Co Ltd', "1,945,652,500.00", "Consumer Services"],
-                        ['Bright Scholar Education Holdings Ltd', "1,839,439,142.80", "Consumer Services"],
-                        ['OneSmart International Education Group Ltd', "1,733,577,210.96", "Consumer Services"],
-                        ['China Yuhua Education Corp Ltd', "1,644,585,033.67", "Consumer Services"]
-
+                        ['Xiabuxiabu Catering Management China Holdings Co Ltd', "1,980,992,643.00", "Consumer Services", "0520.HK"],
+                        ['Virscend Education Co Ltd', "1,945,652,500.00", "Consumer Services", "1565.HK"],
+                        ['Bright Scholar Education Holdings Ltd', "1,839,439,142.80", "Consumer Services", "BEDU.N"],
+                        ['OneSmart International Education Group Ltd', "1,733,577,210.96", "Consumer Services", "ONE.N"],
+                        ['China Yuhua Education Corp Ltd', "1,644,585,033.67", "Consumer Services", "6169.HK"]
                     ]
                 }
             }

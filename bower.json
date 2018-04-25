@@ -21,7 +21,7 @@
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
     "moment": "^2.18.1",
-    "sapphire-chart": "^1.0.51",
+    "sapphire-chart": "^1.0.55",
     "coral-flag": "^1.0.8",
     "jet-api": "^2.3.0",
     "jet-plugin-settings": "^2.0.6",
@@ -29,6 +29,10 @@
     "lodash": "^4.17.4",
     "coral-input": "^1.0.53",
     "coral-popup-panel": "^1.0.63",
-    "emerald-grid": "^1.0.18"
+    "emerald-grid": "^1.0.18",
+    "opal-business-summary": "^1.0.53",
+    "opal-company-fundamentals": "^1.0.35",
+    "opal-company-header": "^2.0.3",
+    "opal-company-recommendations": "^1.0.43"
   }
 }

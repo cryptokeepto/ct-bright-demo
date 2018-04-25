@@ -11,17 +11,17 @@
         }
     </style>
     <template>
-           
-        <nav style="background-color:rgb(77, 77, 77);">
-            <coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
-            <img src="../../images/ct_bright.png" style="width: 180px; height: 30px; margin-left: 450px">
-            <coral-button style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button>
-        </nav>
-        <div style="height: 50px;">
 
-            <ul style="width: 35%; list-style-type: none; margin: 0; margin-left: 450px; overflow: hidden; background-color: #333; text-align: center;">
+        <nav style="background-color:rgb(77, 77, 77); width: 100%;">
+            <div style="width:30%; float: left;text-align: left;";><coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button></div>
+            <div style="width:40%; text-align: center; float: left;"><img src="../../images/ct_bright.png" style="width: 180px; height: 30px;"></div>
+            <div style="width:30%; float: right; text-align: right;";></div><coral-button style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button></div>
+        </nav>
+        <div style="height: 50px; text-align: center; margin: 0 auto; width: 450px; position: relative; z-index: 10000;">
+
+            <ul style="list-style-type: none; overflow: hidden; background-color: #333; text-align: center;">
                 <li style="float: left">
-                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none; background-color: #650b16;" href="#">Region</a>
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Region</a>
                 </li>
                 <li style="float: left">
                     <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Sector</a>
@@ -53,7 +53,7 @@
             },
 
             attached: function () {
-                //anime.js code
+
 
                 $(".container").mapael({
                     map: {
@@ -83,7 +83,7 @@
                         // Image plot
                         'paris': {
                             type: "image",
-                            url: "http://www.neveldo.fr/mapael/assets/img/marker.png",
+                            url: "../../images/marker.png",
                             width: 12,
                             height: 40,
                             latitude: 48.86,

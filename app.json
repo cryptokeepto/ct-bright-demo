@@ -1,32 +1,10 @@
 {
   "name": "ct-bright-demo",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "type": "WebApp",
-  "displayName": "scb",
+  "displayName": "ct-bright-demo",
   "defaultPage": "index.html",
   "description": "",
-  "defaultPlatform": "NodeJS",
-  "datacenter_configurations": {
-    "dev": {
-      "udf": "http://localhost:10040/Apps/UDF/MSF"
-    },
-    "alpha": {
-      "udf": "http://localhost:10040/Apps/UDF/MSF"
-    },
-    "ppe1": {
-      "udf": "http://localhost:10040/Apps/UDF/MSF"
-    },
-    "ntcp": {
-      "udf": "http://localhost:10040/Apps/UDF/MSF"
-    },
-    "stcp": {
-      "udf": "http://localhost:10040/Apps/UDF/MSF"
-    },
-    "dtcp": {
-      "udf": "http://localhost:10040/Apps/UDF/MSF"
-    },
-    "hdcp": {
-      "udf": "http://localhost:10040/Apps/UDF/MSF"
-    }
-  }
+  "defaultPlatform": "NodeJS"
+ 
 }
