@@ -9,66 +9,76 @@
         :host {
             display: block;
         }
-        
-        .left-tail-scanner{
+
+        .left-tail-scanner {
             float: left;
             position: absolute;
             left: -200px;
         }
 
 
-        .right-tail-scanner{
+        .right-tail-scanner {
             float: right;
             position: absolute;
             right: -200px;
         }
 
 
-        .container-after{
+        .container-after {
             transition: all 2s;
             opacity: 1 !important;
         }
-
     </style>
     <template>
-
-        <nav style="background-color:rgb(77, 77, 77); width: 100%;">
-            <div style="width:30%; float: left;text-align: left;";><coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button></div>
-            <div style="width:40%; text-align: center; float: left;"><img src="../../images/ct_bright.png" style="width: 180px; height: 30px;"></div>
-            <div style="width:30%; float: right; text-align: right;";></div><coral-button style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button></div>
-        </nav>
-        <div style="height: 50px; text-align: center; margin: 0 auto; width: 450px; position: relative;">
-
-            <ul style="list-style-type: none; overflow: hidden; background-color: #333; text-align: center;">
-                <li style="float: left">
-                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Region</a>
-                </li>
-                <li style="float: left">
-                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Sector</a>
-                </li>
-                <li style="float: left">
-                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Market Cap</a>
-                </li>
-                <li style="float: left">
-                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Other Key Metric</a>
-                </li>
-
-            </ul>
-        </div>
-
-        <div class="container" style="    width: 100%;
-    position: fixed;
-    opacity: 0.35;
-    top: 50%;
-    transform: translateY(-40%);">
-            <div class="map" style=""></div>
-        </div>
+        <header>
+            <nav style="background-color:rgb(77, 77, 77); width: 100%;">
+                <div style="width:30%; float: left;text-align: left;" ;>
+                    <coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
+                </div>
+                <div style="width:40%; text-align: center; float: left;">
+                    <img src="../../images/ct_bright.png" style="width: 180px; height: 30px;">
+                </div>
+                <div style="width:30%; float: right; text-align: right;" ;></div>
+                    <coral-button on-click="goPortfolio" style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button>
+                </div>
+            </nav>
+            <div style="height: 50px; text-align: center; margin: 0 auto; width: 450px; position: relative;">
+    
+                <ul style="list-style-type: none; overflow: hidden; background-color: #333; text-align: center;">
+                    <li style="float: left">
+                        <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Region</a>
+                    </li>
+                    <li style="float: left">
+                        <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Sector</a>
+                    </li>
+                    <li style="float: left">
+                        <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Market Cap</a>
+                    </li>
+                    <li style="float: left">
+                        <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Other Key Metric</a>
+                    </li>
+    
+                </ul>
+            </div>
+        </header>
+        
+        <div id="mapContainer">
+            <div class="container" style="width: 100%; position: fixed; opacity: 0.35; top: 50%; transform: translateY(-40%);">
+                <div class="map"></div>
+            </div>
+        </div> 
+       
+        
         <div class="scanner" style="position: absolute;height: 100vh;width: 100%;top: 0;">
             <img src="../../images/left-tail-scanner.png" class="left-tail-scanner">
             <img src="../../images/right-tail-scanner.png" class="right-tail-scanner">
         </div>
 
         <opportunities-view></opportunities-view>
+
+        <div id="chartContainer" style="display: none;">
+            <chart-page></chart-page>
+        </div>
 
     </template>
 
@@ -103,7 +113,6 @@
                             eventHandlers: {
                                 click: function (e, id, mapElem, textElem) {
                                     document.getElementsByTagName("opportunities-view")[0].show();
-
                                 }
                             }
                         }
@@ -135,29 +144,29 @@
 
                 //anime.js code
                 var leftTailScanner = anime({
-                  targets: '.scanner .left-tail-scanner',
-                  translateX: {
-                    value: 1600,
-                    duration: 2000,
-                    easing: 'easeInOutSine'
-                  },
-                  delay: 250 // All properties except 'scale' inherit 250ms delay
+                    targets: '.scanner .left-tail-scanner',
+                    translateX: {
+                        value: 1600,
+                        duration: 2000,
+                        easing: 'easeInOutSine'
+                    },
+                    delay: 250 // All properties except 'scale' inherit 250ms delay
                 });
 
                 var rightTailScanner = anime({
-                  targets: '.scanner .right-tail-scanner',
-                  translateX: {
-                    value: -1600,
-                    duration: 2000,
-                    easing: 'easeInOutSine'
-                  },
-                  delay: 2500 // All properties except 'scale' inherit 250ms delay
+                    targets: '.scanner .right-tail-scanner',
+                    translateX: {
+                        value: -1600,
+                        duration: 2000,
+                        easing: 'easeInOutSine'
+                    },
+                    delay: 2500 // All properties except 'scale' inherit 250ms delay
                 });
 
 
                 //change map opacity
-                setTimeout(function(){
-                    
+                setTimeout(function () {
+
                     //remove scanner layer
                     $('.scanner').remove();
                     console.log('Remove Scanner Class');
@@ -169,6 +178,18 @@
 
 
 
+            },
+            
+            goPortfolio: function() {
+                // mapContainer
+                var mapContainer = document.getElementById("mapContainer");
+                mapContainer.style.display = "none";
+                console.log(mapContainer)
+                // chartContainer
+                var chartContainer = document.getElementById("chartContainer");
+                chartContainer.style.display = "block";
+                console.log(chartContainer)
+                        
             }
 
 
@@ -176,11 +197,5 @@
 
     </script>
 
-    <script type="text/javascript">
-        
-        
-    </script>
 
-
-    </script>
 </dom-module>
