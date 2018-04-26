@@ -9,65 +9,79 @@
         :host {
             display: block;
         }
-
-        .left-tail-scanner {
+        
+        .left-tail-scanner{
             float: left;
             position: absolute;
             left: -200px;
         }
 
 
-        .right-tail-scanner {
+        .right-tail-scanner{
             float: right;
             position: absolute;
             right: -200px;
         }
 
 
-        .container-after {
+        .container-after{
             transition: all 2s;
             opacity: 1 !important;
         }
+
+        .mapTooltip{
+            display: none !important;
+        }
+
     </style>
     <template>
-        <header>
-            <nav style="background-color:rgb(77, 77, 77); width: 100%;">
-                <div style="width:30%; float: left;text-align: left;" ;>
-                    <coral-button on-click="goOpportunities" style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
-                </div>
-                <div style="width:40%; text-align: center; float: left;">
-                    <img src="../../images/ct_bright.png" style="width: 180px; height: 30px;">
-                </div>
-                <div style="width:30%; float: right; text-align: right;" ;></div>
-                    <coral-button on-click="goPortfolio" style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button>
-                </div>
-            </nav>
-            <div style="height: 50px; text-align: center; margin: 0 auto; width: 450px; position: relative;">
-    
-                <ul style="list-style-type: none; overflow: hidden; background-color: #333; text-align: center;">
-                    <li style="float: left">
-                        <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Region</a>
-                    </li>
-                    <li style="float: left">
-                        <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Sector</a>
-                    </li>
-                    <li style="float: left">
-                        <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Market Cap</a>
-                    </li>
-                    <li style="float: left">
-                        <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Other Key Metric</a>
-                    </li>
-    
-                </ul>
+
+        <nav style="background-color:rgb(77, 77, 77); width: 100%;">
+            <!-- <div style="width:30%; float: left;text-align: left;";><coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button></div>
+            <div style="width:40%; text-align: center; float: left;"><img src="../../images/ct_bright.png" style="width: 180px; height: 30px;"></div>
+            <div style="width:30%; float: right; text-align: right;";></div><coral-button style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button></div> -->
+
+
+            <div style="width:30%; float: left;text-align: left;" ;>
+                <coral-button on-click="goOpportunities" style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
             </div>
-        </header>
-        
+            <div style="width:40%; text-align: center; float: left;">
+                <img src="../../images/ct_bright.png" style="width: 180px; height: 30px;">
+            </div>
+            <div style="width:30%; float: right; text-align: right;" ;></div>
+                <coral-button on-click="goPortfolio" style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button>
+            </div>
+            
+        </nav>
+        <div style="height: 50px; text-align: center; margin: 0 auto; width: 450px; position: relative;">
+
+            <ul style="list-style-type: none; overflow: hidden; background-color: #333; text-align: center;">
+                <li style="float: left">
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Region</a>
+                </li>
+                <li style="float: left">
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Sector</a>
+                </li>
+                <li style="float: left">
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Market Cap</a>
+                </li>
+                <li style="float: left">
+                    <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Other Key Metric</a>
+                </li>
+
+            </ul>
+        </div>
+
         <div id="mapContainer">
-            <div class="container" style="width: 100%; position: fixed; opacity: 0.35; top: 50%; transform: translateY(-40%);">
+            <div class="container" style="width: 100%;
+            position: fixed;
+            opacity: 0.35;
+            top: 50%;
+            transform: translateY(-40%);">
                 <div class="map"></div>
             </div>
-        </div> 
-       
+        </div>
+
         
         <div class="scanner" style="position: absolute;height: 100vh;width: 100%;top: 0;">
             <img src="../../images/left-tail-scanner.png" class="left-tail-scanner">
@@ -93,93 +107,6 @@
 
             },
 
-            attached: function () {
-
-
-                $(".container").mapael({
-                    map: {
-
-                        name: "world_countries",
-                        zoom: {
-                            enabled: true,
-                            maxLevel: 10
-                        },
-
-                        defaultArea: {
-                            attrs: {
-                                fill: "#cccccc",
-                                stroke: "#cccccc"
-                            },
-                            eventHandlers: {
-                                click: function (e, id, mapElem, textElem) {
-                                    document.getElementsByTagName("opportunities-view")[0].show();
-                                }
-                            }
-                        }
-
-
-                    },
-                    plots: {
-                        // Image plot
-                        'paris': {
-                            type: "image",
-                            url: "images/marker.png",
-                            width: 40,
-                            height: 40,
-                            latitude: 48.86,
-                            longitude: 2.3444,
-                            attrs: {
-                                opacity: 1
-                            },
-                            attrsHover: {
-                                transform: "s1.5"
-                            }
-                        }
-
-                    }
-
-
-                });
-
-
-                //anime.js code
-                var leftTailScanner = anime({
-                    targets: '.scanner .left-tail-scanner',
-                    translateX: {
-                        value: 1600,
-                        duration: 2000,
-                        easing: 'easeInOutSine'
-                    },
-                    delay: 250 // All properties except 'scale' inherit 250ms delay
-                });
-
-                var rightTailScanner = anime({
-                    targets: '.scanner .right-tail-scanner',
-                    translateX: {
-                        value: -1600,
-                        duration: 2000,
-                        easing: 'easeInOutSine'
-                    },
-                    delay: 2500 // All properties except 'scale' inherit 250ms delay
-                });
-
-
-                //change map opacity
-                setTimeout(function () {
-
-                    //remove scanner layer
-                    $('.scanner').remove();
-                    console.log('Remove Scanner Class');
-
-                    $('.container').addClass('container-after');
-
-
-                }, 4200);
-
-
-
-            },
-            
             goPortfolio: function() {
                 // mapContainer
                 var mapContainer = document.getElementById("mapContainer");
@@ -198,6 +125,1693 @@
                 // chartContainer
                 var chartContainer = document.getElementById("chartContainer");
                 chartContainer.style.display = "none";
+            },
+
+
+
+            attached: function () {
+
+        $(function () {
+
+            // Fake data for countries and cities from 2003 to 2013
+            var data = {
+                
+                "2009": {
+                    "areas": {
+                        "AF": {
+                            "value": 52466800,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Afghanistan",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Afghanistan</span><br />Population : 52466800"
+                            // }
+                        },
+                        "ZA": {
+                            "value": 26108826,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=South Africa",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">South Africa</span><br />Population : 26108826"
+                            // }
+                        },
+                        "AL": {
+                            "value": 53559946,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Albania",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Albania</span><br />Population : 53559946"
+                            // }
+                        },
+                        "DZ": {
+                            "value": 49796088,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Algeria",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Algeria</span><br />Population : 49796088"
+                            // }
+                        },
+                        "DE": {
+                            "value": 16718374,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Germany",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Germany</span><br />Population : 16718374"
+                            // }
+                        },
+                        "AD": {
+                            "value": 26774219,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Andorra",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Andorra</span><br />Population : 26774219"
+                            // }
+                        },
+                        "AO": {
+                            "value": 54956540,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Angola",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Angola</span><br />Population : 54956540"
+                            // }
+                        },
+                        "AG": {
+                            "value": 56018610,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Antigua And Barbuda",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Antigua And Barbuda</span><br />Population : 56018610"
+                            // }
+                        },
+                        "SA": {
+                            "value": 54792020,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Saudi Arabia",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Saudi Arabia</span><br />Population : 54792020"
+                            // }
+                        },
+                        "AR": {
+                            "value": 47445276,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Argentina",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Argentina</span><br />Population : 47445276"
+                            // }
+                        },
+                        "AM": {
+                            "value": 20670517,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Armenia",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Armenia</span><br />Population : 20670517"
+                            // }
+                        },
+                        "AU": {
+                            "value": 6435858,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Australia",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Australia</span><br />Population : 6435858"
+                            // }
+                        },
+                        "AT": {
+                            "value": 59990860,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Austria",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Austria</span><br />Population : 59990860"
+                            // }
+                        },
+                        "AZ": {
+                            "value": 18862622,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Azerbaijan",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Azerbaijan</span><br />Population : 18862622"
+                            // }
+                        },
+                        "BS": {
+                            "value": 8730001,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Bahamas",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Bahamas</span><br />Population : 8730001"
+                            }
+                        },
+                        "BH": {
+                            "value": 56413459,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Bahrain",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Bahrain</span><br />Population : 56413459"
+                            }
+                        },
+                        "BD": {
+                            "value": 15468020,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Bangladesh",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Bangladesh</span><br />Population : 15468020"
+                            }
+                        },
+                        "BB": {
+                            "value": 21516882,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Barbados",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Barbados</span><br />Population : 21516882"
+                            }
+                        },
+                        "BE": {
+                            "value": 47213120,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Belgium",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Belgium</span><br />Population : 47213120"
+                            }
+                        },
+                        "BZ": {
+                            "value": 31867035,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Belize",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Belize</span><br />Population : 31867035"
+                            }
+                        },
+                        "BJ": {
+                            "value": 54126627,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Benin",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Benin</span><br />Population : 54126627"
+                            }
+                        },
+                        "BT": {
+                            "value": 46048682,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Bhutan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Bhutan</span><br />Population : 46048682"
+                            }
+                        },
+                        "BY": {
+                            "value": 14447995,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Belarus",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Belarus</span><br />Population : 14447995"
+                            }
+                        },
+                        "MM": {
+                            "value": 28262213,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Myanmar",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Myanmar</span><br />Population : 28262213"
+                            }
+                        },
+                        "BO": {
+                            "value": 39319803,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Bolivia, Plurinational State Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Bolivia, Plurinational State Of</span><br />Population : 39319803"
+                            }
+                        },
+                        "BA": {
+                            "value": 53148645,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Bosnia And Herzegovina",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Bosnia And Herzegovina</span><br />Population : 53148645"
+                            }
+                        },
+                        "BW": {
+                            "value": 58312754,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Botswana",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Botswana</span><br />Population : 58312754"
+                            }
+                        },
+                        "BR": {
+                            "value": 51214618,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Brazil",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Brazil</span><br />Population : 51214618"
+                            }
+                        },
+                        "BN": {
+                            "value": 44050675,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Brunei Darussalam",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Brunei Darussalam</span><br />Population : 44050675"
+                            }
+                        },
+                        "BG": {
+                            "value": 33457398,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Bulgaria",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Bulgaria</span><br />Population : 33457398"
+                            }
+                        },
+                        "BF": {
+                            "value": 57135520,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Burkina Faso",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Burkina Faso</span><br />Population : 57135520"
+                            }
+                        },
+                        "BI": {
+                            "value": 16489874,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Burundi",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Burundi</span><br />Population : 16489874"
+                            }
+                        },
+                        "KH": {
+                            "value": 51472367,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Cambodia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Cambodia</span><br />Population : 51472367"
+                            }
+                        },
+                        "CM": {
+                            "value": 7565564,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Cameroon",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Cameroon</span><br />Population : 7565564"
+                            }
+                        },
+                        "CA": {
+                            "value": 38994418,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Canada",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Canada</span><br />Population : 38994418"
+                            }
+                        },
+                        "CV": {
+                            "value": 49503608,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Cape Verde",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Cape Verde</span><br />Population : 49503608"
+                            }
+                        },
+                        "CF": {
+                            "value": 14788003,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Central African Republic",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Central African Republic</span><br />Population : 14788003"
+                            }
+                        },
+                        "CL": {
+                            "value": 26013769,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Chile",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Chile</span><br />Population : 26013769"
+                            }
+                        },
+                        "CN": {
+                            "value": 2017575,
+                            // // "href": "javacript:void(0)",
+                            // "tooltip": {
+                            //    // "content": "<span style=\"font-weight:bold;\">China</span><br />Population : 2017575"
+                            // }
+                        },
+                        "CY": {
+                            "value": 6121441,
+                            // "href": "http://en.wikipedia.org/w/index.php?search=Cyprus",
+                            // "tooltip": {
+                            //     "content": "<span style=\"font-weight:bold;\">Cyprus</span><br />Population : 6121441"
+                            // }
+                        },
+                        "CO": {
+                            "value": 36950711,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Colombia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Colombia</span><br />Population : 36950711"
+                            }
+                        },
+                        "KM": {
+                            "value": 49492639,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Comoros",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Comoros</span><br />Population : 49492639"
+                            }
+                        },
+                        "CG": {
+                            "value": 34183115,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Congo",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Congo</span><br />Population : 34183115"
+                            }
+                        },
+                        "CD": {
+                            "value": 11759002,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Congo, The Democratic Republic Of The",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Congo, The Democratic Republic Of The</span><br />Population : 11759002"
+                            }
+                        },
+                        "KP": {
+                            "value": 11263614,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Korea, Democratic People's Republic Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Korea, Democratic People's Republic Of</span><br />Population : 11263614"
+                            }
+                        },
+                        "KR": {
+                            "value": 8742797,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Korea, Republic Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Korea, Republic Of</span><br />Population : 8742797"
+                            }
+                        },
+                        "CR": {
+                            "value": 13819162,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Costa Rica",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Costa Rica</span><br />Population : 13819162"
+                            }
+                        },
+                        "CI": {
+                            "value": 42081915,
+                            "href": "http://en.wikipedia.org/w/index.php?search=C\u00d4te D'ivoire",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">C\u00d4te D'ivoire</span><br />Population : 42081915"
+                            }
+                        },
+                        "HR": {
+                            "value": 40679837,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Croatia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Croatia</span><br />Population : 40679837"
+                            }
+                        },
+                        "CU": {
+                            "value": 44154871,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Cuba",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Cuba</span><br />Population : 44154871"
+                            }
+                        },
+                        "DK": {
+                            "value": 28903842,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Denmark",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Denmark</span><br />Population : 28903842"
+                            }
+                        },
+                        "DJ": {
+                            "value": 42805805,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Djibouti",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Djibouti</span><br />Population : 42805805"
+                            }
+                        },
+                        "DM": {
+                            "value": 18502505,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Dominica",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Dominica</span><br />Population : 18502505"
+                            }
+                        },
+                        "EG": {
+                            "value": 26569482,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Egypt",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Egypt</span><br />Population : 26569482"
+                            }
+                        },
+                        "AE": {
+                            "value": 17665280,
+                            "href": "http://en.wikipedia.org/w/index.php?search=United Arab Emirates",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">United Arab Emirates</span><br />Population : 17665280"
+                            }
+                        },
+                        "EC": {
+                            "value": 49496295,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Ecuador",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Ecuador</span><br />Population : 49496295"
+                            }
+                        },
+                        "ER": {
+                            "value": 47684745,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Eritrea",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Eritrea</span><br />Population : 47684745"
+                            }
+                        },
+                        "ES": {
+                            "value": 36477258,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Spain",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Spain</span><br />Population : 36477258"
+                            }
+                        },
+                        "EE": {
+                            "value": 8181601,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Estonia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Estonia</span><br />Population : 8181601"
+                            }
+                        },
+                        "US": {
+                            "value": 7869012,
+                            "href": "http://en.wikipedia.org/w/index.php?search=United States",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">United States</span><br />Population : 7869012"
+                            }
+                        },
+                        "ET": {
+                            "value": 21529678,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Ethiopia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Ethiopia</span><br />Population : 21529678"
+                            }
+                        },
+                        "FJ": {
+                            "value": 4618823,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Fiji",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Fiji</span><br />Population : 4618823"
+                            }
+                        },
+                        "FI": {
+                            "value": 58480930,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Finland",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Finland</span><br />Population : 58480930"
+                            }
+                        },
+                        "FR": {
+                            "value": 13389581,
+                            "href": "http://en.wikipedia.org/w/index.php?search=France",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">France</span><br />Population : 13389581"
+                            }
+                        },
+                        "GA": {
+                            "value": 42990433,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Gabon",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Gabon</span><br />Population : 42990433"
+                            }
+                        },
+                        "GM": {
+                            "value": 11484802,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Gambia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Gambia</span><br />Population : 11484802"
+                            }
+                        },
+                        "GE": {
+                            "value": 16941391,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Georgia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Georgia</span><br />Population : 16941391"
+                            }
+                        },
+                        "GH": {
+                            "value": 11773626,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Ghana",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Ghana</span><br />Population : 11773626"
+                            }
+                        },
+                        "GR": {
+                            "value": 5370132,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Greece",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Greece</span><br />Population : 5370132"
+                            }
+                        },
+                        "GD": {
+                            "value": 47715821,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Grenada",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Grenada</span><br />Population : 47715821"
+                            }
+                        },
+                        "GT": {
+                            "value": 1491110,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Guatemala",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Guatemala</span><br />Population : 1491110"
+                            }
+                        },
+                        "GN": {
+                            "value": 38586774,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Guinea",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Guinea</span><br />Population : 38586774"
+                            }
+                        },
+                        "GQ": {
+                            "value": 11621902,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Equatorial Guinea",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Equatorial Guinea</span><br />Population : 11621902"
+                            }
+                        },
+                        "GW": {
+                            "value": 14102502,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Guinea-bissau",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Guinea-bissau</span><br />Population : 14102502"
+                            }
+                        },
+                        "GY": {
+                            "value": 40208212,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Guyana",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Guyana</span><br />Population : 40208212"
+                            }
+                        },
+                        "HT": {
+                            "value": 39544647,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Haiti",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Haiti</span><br />Population : 39544647"
+                            }
+                        },
+                        "HN": {
+                            "value": 14948868,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Honduras",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Honduras</span><br />Population : 14948868"
+                            }
+                        },
+                        "HU": {
+                            "value": 21085473,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Hungary",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Hungary</span><br />Population : 21085473"
+                            }
+                        },
+                        "JM": {
+                            "value": 11420822,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Jamaica",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Jamaica</span><br />Population : 11420822"
+                            }
+                        },
+                        "JP": {
+                            "value": 50212873,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Japan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Japan</span><br />Population : 50212873"
+                            }
+                        },
+                        "MH": {
+                            "value": 58404154,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Marshall Islands",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Marshall Islands</span><br />Population : 58404154"
+                            }
+                        },
+                        "PW": {
+                            "value": 29355359,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Palau",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Palau</span><br />Population : 29355359"
+                            }
+                        },
+                        "SB": {
+                            "value": 3107064,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Solomon Islands",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Solomon Islands</span><br />Population : 3107064"
+                            }
+                        },
+                        "IN": {
+                            "value": 16307074,
+                            "href": "http://en.wikipedia.org/w/index.php?search=India",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">India</span><br />Population : 16307074"
+                            }
+                        },
+                        "ID": {
+                            "value": 35290884,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Indonesia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Indonesia</span><br />Population : 35290884"
+                            }
+                        },
+                        "JO": {
+                            "value": 29552783,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Jordan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Jordan</span><br />Population : 29552783"
+                            }
+                        },
+                        "IR": {
+                            "value": 13395065,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Iran, Islamic Republic Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Iran, Islamic Republic Of</span><br />Population : 13395065"
+                            }
+                        },
+                        "IQ": {
+                            "value": 33292877,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Iraq",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Iraq</span><br />Population : 33292877"
+                            }
+                        },
+                        "IE": {
+                            "value": 48562186,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Ireland",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Ireland</span><br />Population : 48562186"
+                            }
+                        },
+                        "IS": {
+                            "value": 42268372,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Iceland",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Iceland</span><br />Population : 42268372"
+                            }
+                        },
+                        "IL": {
+                            "value": 10462948,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Israel",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Israel</span><br />Population : 10462948"
+                            }
+                        },
+                        "IT": {
+                            "value": 46885907,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Italy",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Italy</span><br />Population : 46885907"
+                            }
+                        },
+                        "KZ": {
+                            "value": 51421183,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Kazakhstan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Kazakhstan</span><br />Population : 51421183"
+                            }
+                        },
+                        "KE": {
+                            "value": 58142749,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Kenya",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Kenya</span><br />Population : 58142749"
+                            }
+                        },
+                        "KG": {
+                            "value": 52338840,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Kyrgyzstan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Kyrgyzstan</span><br />Population : 52338840"
+                            }
+                        },
+                        "KI": {
+                            "value": 32751788,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Kiribati",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Kiribati</span><br />Population : 32751788"
+                            }
+                        },
+                        "KW": {
+                            "value": 27020999,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Kuwait",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Kuwait</span><br />Population : 27020999"
+                            }
+                        },
+                        "LA": {
+                            "value": 37866541,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Lao People's Democratic Republic",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Lao People's Democratic Republic</span><br />Population : 37866541"
+                            }
+                        },
+                        "LS": {
+                            "value": 47300864,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Lesotho",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Lesotho</span><br />Population : 47300864"
+                            }
+                        },
+                        "LV": {
+                            "value": 56406147,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Latvia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Latvia</span><br />Population : 56406147"
+                            }
+                        },
+                        "LB": {
+                            "value": 48364762,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Lebanon",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Lebanon</span><br />Population : 48364762"
+                            }
+                        },
+                        "LR": {
+                            "value": 31980371,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Liberia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Liberia</span><br />Population : 31980371"
+                            }
+                        },
+                        "LY": {
+                            "value": 53377146,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Libya",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Libya</span><br />Population : 53377146"
+                            }
+                        },
+                        "LI": {
+                            "value": 33614606,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Liechtenstein",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Liechtenstein</span><br />Population : 33614606"
+                            }
+                        },
+                        "LT": {
+                            "value": 38705594,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Lithuania",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Lithuania</span><br />Population : 38705594"
+                            }
+                        },
+                        "LU": {
+                            "value": 1174865,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Luxembourg",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Luxembourg</span><br />Population : 1174865"
+                            }
+                        },
+                        "MK": {
+                            "value": 38745810,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Macedonia, The Former Yugoslav Republic Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Macedonia, The Former Yugoslav Republic Of</span><br />Population : 38745810"
+                            }
+                        },
+                        "MG": {
+                            "value": 29892792,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Madagascar",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Madagascar</span><br />Population : 29892792"
+                            }
+                        },
+                        "MY": {
+                            "value": 11146621,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Malaysia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Malaysia</span><br />Population : 11146621"
+                            }
+                        },
+                        "MW": {
+                            "value": 55890650,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Malawi",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Malawi</span><br />Population : 55890650"
+                            }
+                        },
+                        "MV": {
+                            "value": 1534982,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Maldives",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Maldives</span><br />Population : 1534982"
+                            }
+                        },
+                        "ML": {
+                            "value": 20906329,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Mali",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Mali</span><br />Population : 20906329"
+                            }
+                        },
+                        "MT": {
+                            "value": 8740969,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Malta",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Malta</span><br />Population : 8740969"
+                            }
+                        },
+                        "MA": {
+                            "value": 37018347,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Morocco",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Morocco</span><br />Population : 37018347"
+                            }
+                        },
+                        "MU": {
+                            "value": 29722787,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Mauritius",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Mauritius</span><br />Population : 29722787"
+                            }
+                        },
+                        "MR": {
+                            "value": 12270843,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Mauritania",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Mauritania</span><br />Population : 12270843"
+                            }
+                        },
+                        "MX": {
+                            "value": 44591764,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Mexico",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Mexico</span><br />Population : 44591764"
+                            }
+                        },
+                        "FM": {
+                            "value": 54998584,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Micronesia, Federated States Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Micronesia, Federated States Of</span><br />Population : 54998584"
+                            }
+                        },
+                        "MD": {
+                            "value": 1637350,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Moldova, Republic Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Moldova, Republic Of</span><br />Population : 1637350"
+                            }
+                        },
+                        "MC": {
+                            "value": 39551959,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Monaco",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Monaco</span><br />Population : 39551959"
+                            }
+                        },
+                        "MN": {
+                            "value": 41952127,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Mongolia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Mongolia</span><br />Population : 41952127"
+                            }
+                        },
+                        "ME": {
+                            "value": 10621985,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Montenegro",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Montenegro</span><br />Population : 10621985"
+                            }
+                        },
+                        "MZ": {
+                            "value": 5256796,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Mozambique",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Mozambique</span><br />Population : 5256796"
+                            }
+                        },
+                        "NA": {
+                            "value": 48465302,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Namibia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Namibia</span><br />Population : 48465302"
+                            }
+                        },
+                        "NP": {
+                            "value": 13925186,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Nepal",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Nepal</span><br />Population : 13925186"
+                            }
+                        },
+                        "NI": {
+                            "value": 14329175,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Nicaragua",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Nicaragua</span><br />Population : 14329175"
+                            }
+                        },
+                        "NE": {
+                            "value": 38709250,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Niger",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Niger</span><br />Population : 38709250"
+                            }
+                        },
+                        "NG": {
+                            "value": 14676495,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Nigeria",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Nigeria</span><br />Population : 14676495"
+                            }
+                        },
+                        "NO": {
+                            "value": 3564065,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Norway",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Norway</span><br />Population : 3564065"
+                            }
+                        },
+                        "NZ": {
+                            "value": 26810779,
+                            "href": "http://en.wikipedia.org/w/index.php?search=New Zealand",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">New Zealand</span><br />Population : 26810779"
+                            }
+                        },
+                        "OM": {
+                            "value": 10272836,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Oman",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Oman</span><br />Population : 10272836"
+                            }
+                        },
+                        "UG": {
+                            "value": 3701165,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Uganda",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Uganda</span><br />Population : 3701165"
+                            }
+                        },
+                        "UZ": {
+                            "value": 23971890,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Uzbekistan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Uzbekistan</span><br />Population : 23971890"
+                            }
+                        },
+                        "PK": {
+                            "value": 38707422,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Pakistan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Pakistan</span><br />Population : 38707422"
+                            }
+                        },
+                        "PS": {
+                            "value": 37875681,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Palestine, State Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Palestine, State Of</span><br />Population : 37875681"
+                            }
+                        },
+                        "PA": {
+                            "value": 51104938,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Panama",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Panama</span><br />Population : 51104938"
+                            }
+                        },
+                        "PG": {
+                            "value": 58301786,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Papua New Guinea",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Papua New Guinea</span><br />Population : 58301786"
+                            }
+                        },
+                        "PY": {
+                            "value": 10709729,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Paraguay",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Paraguay</span><br />Population : 10709729"
+                            }
+                        },
+                        "NL": {
+                            "value": 29795908,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Netherlands",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Netherlands</span><br />Population : 29795908"
+                            }
+                        },
+                        "PE": {
+                            "value": 42703436,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Peru",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Peru</span><br />Population : 42703436"
+                            }
+                        },
+                        "PH": {
+                            "value": 59756876,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Philippines",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Philippines</span><br />Population : 59756876"
+                            }
+                        },
+                        "PL": {
+                            "value": 53258326,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Poland",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Poland</span><br />Population : 53258326"
+                            }
+                        },
+                        "PT": {
+                            "value": 44061643,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Portugal",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Portugal</span><br />Population : 44061643"
+                            }
+                        },
+                        "QA": {
+                            "value": 14062286,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Qatar",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Qatar</span><br />Population : 14062286"
+                            }
+                        },
+                        "DO": {
+                            "value": 11490286,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Dominican Republic",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Dominican Republic</span><br />Population : 11490286"
+                            }
+                        },
+                        "RO": {
+                            "value": 7243835,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Romania",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Romania</span><br />Population : 7243835"
+                            }
+                        },
+                        "GB": {
+                            "value": 48851010,
+                            "href": "http://en.wikipedia.org/w/index.php?search=United Kingdom",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">United Kingdom</span><br />Population : 48851010"
+                            }
+                        },
+                        "RU": {
+                            "value": 30697113,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Russian Federation",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Russian Federation</span><br />Population : 30697113"
+                            }
+                        },
+                        "RW": {
+                            "value": 46405142,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Rwanda",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Rwanda</span><br />Population : 46405142"
+                            }
+                        },
+                        "KN": {
+                            "value": 43006885,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Saint Kitts And Nevis",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Saint Kitts And Nevis</span><br />Population : 43006885"
+                            }
+                        },
+                        "SM": {
+                            "value": 42292136,
+                            "href": "http://en.wikipedia.org/w/index.php?search=San Marino",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">San Marino</span><br />Population : 42292136"
+                            }
+                        },
+                        "VC": {
+                            "value": 8373541,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Saint Vincent And The Grenadines",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Saint Vincent And The Grenadines</span><br />Population : 8373541"
+                            }
+                        },
+                        "LC": {
+                            "value": 27854568,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Saint Lucia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Saint Lucia</span><br />Population : 27854568"
+                            }
+                        },
+                        "SV": {
+                            "value": 1438098,
+                            "href": "http://en.wikipedia.org/w/index.php?search=El Salvador",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">El Salvador</span><br />Population : 1438098"
+                            }
+                        },
+                        "WS": {
+                            "value": 52463144,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Samoa",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Samoa</span><br />Population : 52463144"
+                            }
+                        },
+                        "ST": {
+                            "value": 12607196,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Sao Tome And Principe",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Sao Tome And Principe</span><br />Population : 12607196"
+                            }
+                        },
+                        "SN": {
+                            "value": 28841690,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Senegal",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Senegal</span><br />Population : 28841690"
+                            }
+                        },
+                        "RS": {
+                            "value": 52878101,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Serbia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Serbia</span><br />Population : 52878101"
+                            }
+                        },
+                        "SC": {
+                            "value": 17592160,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Seychelles",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Seychelles</span><br />Population : 17592160"
+                            }
+                        },
+                        "SL": {
+                            "value": 19063702,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Sierra Leone",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Sierra Leone</span><br />Population : 19063702"
+                            }
+                        },
+                        "SG": {
+                            "value": 32519632,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Singapore",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Singapore</span><br />Population : 32519632"
+                            }
+                        },
+                        "SK": {
+                            "value": 38217517,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Slovakia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Slovakia</span><br />Population : 38217517"
+                            }
+                        },
+                        "SI": {
+                            "value": 25657309,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Slovenia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Slovenia</span><br />Population : 25657309"
+                            }
+                        },
+                        "SO": {
+                            "value": 33358685,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Somalia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Somalia</span><br />Population : 33358685"
+                            }
+                        },
+                        "SD": {
+                            "value": 51991520,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Sudan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Sudan</span><br />Population : 51991520"
+                            }
+                        },
+                        "SS": {
+                            "value": 7996972,
+                            "href": "http://en.wikipedia.org/w/index.php?search=South Sudan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">South Sudan</span><br />Population : 7996972"
+                            }
+                        },
+                        "LK": {
+                            "value": 14886715,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Sri Lanka",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Sri Lanka</span><br />Population : 14886715"
+                            }
+                        },
+                        "SE": {
+                            "value": 31157770,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Sweden",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Sweden</span><br />Population : 31157770"
+                            }
+                        },
+                        "CH": {
+                            "value": 10510476,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Switzerland",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Switzerland</span><br />Population : 10510476"
+                            }
+                        },
+                        "SR": {
+                            "value": 42707092,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Suriname",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Suriname</span><br />Population : 42707092"
+                            }
+                        },
+                        "SZ": {
+                            "value": 13358505,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Swaziland",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Swaziland</span><br />Population : 13358505"
+                            }
+                        },
+                        "SY": {
+                            "value": 18076581,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Syrian Arab Republic",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Syrian Arab Republic</span><br />Population : 18076581"
+                            }
+                        },
+                        "TJ": {
+                            "value": 40979630,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Tajikistan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Tajikistan</span><br />Population : 40979630"
+                            }
+                        },
+                        "TZ": {
+                            "value": 13188501,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Tanzania, United Republic Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Tanzania, United Republic Of</span><br />Population : 13188501"
+                            }
+                        },
+                        "TD": {
+                            "value": 19200802,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Chad",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Chad</span><br />Population : 19200802"
+                            }
+                        },
+                        "CZ": {
+                            "value": 29680743,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Czech Republic",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Czech Republic</span><br />Population : 29680743"
+                            }
+                        },
+                        "TH": {
+                            "value": 6752102,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Thailand",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Thailand</span><br />Population : 6752102"
+                            }
+                        },
+                        "TL": {
+                            "value": 59831824,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Timor-leste",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Timor-leste</span><br />Population : 59831824"
+                            }
+                        },
+                        "TG": {
+                            "value": 591732,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Togo",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Togo</span><br />Population : 591732"
+                            }
+                        },
+                        "TO": {
+                            "value": 11685882,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Tonga",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Tonga</span><br />Population : 11685882"
+                            }
+                        },
+                        "TT": {
+                            "value": 40731021,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Trinidad And Tobago",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Trinidad And Tobago</span><br />Population : 40731021"
+                            }
+                        },
+                        "TN": {
+                            "value": 53477686,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Tunisia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Tunisia</span><br />Population : 53477686"
+                            }
+                        },
+                        "TM": {
+                            "value": 15559421,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Turkmenistan",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Turkmenistan</span><br />Population : 15559421"
+                            }
+                        },
+                        "TR": {
+                            "value": 59557624,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Turkey",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Turkey</span><br />Population : 59557624"
+                            }
+                        },
+                        "TV": {
+                            "value": 6269509,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Tuvalu",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Tuvalu</span><br />Population : 6269509"
+                            }
+                        },
+                        "VU": {
+                            "value": 14716711,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Vanuatu",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Vanuatu</span><br />Population : 14716711"
+                            }
+                        },
+                        "VE": {
+                            "value": 32281992,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Venezuela, Bolivarian Republic Of",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Venezuela, Bolivarian Republic Of</span><br />Population : 32281992"
+                            }
+                        },
+                        "VN": {
+                            "value": 59111591,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Viet Nam",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Viet Nam</span><br />Population : 59111591"
+                            }
+                        },
+                        "UA": {
+                            "value": 36270694,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Ukraine",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Ukraine</span><br />Population : 36270694"
+                            }
+                        },
+                        "UY": {
+                            "value": 53989527,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Uruguay",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Uruguay</span><br />Population : 53989527"
+                            }
+                        },
+                        "YE": {
+                            "value": 48887571,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Yemen",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Yemen</span><br />Population : 48887571"
+                            }
+                        },
+                        "ZM": {
+                            "value": 45913410,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Zambia",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Zambia</span><br />Population : 45913410"
+                            }
+                        },
+                        "ZW": {
+                            "value": 53987699,
+                            "href": "http://en.wikipedia.org/w/index.php?search=Zimbabwe",
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Zimbabwe</span><br />Population : 53987699"
+                            }
+                        }
+                    },
+                    "plots": {
+                        "paris": {
+                            "value": 382495,
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Paris</span><br />Population: 382495"
+                            }
+                        },
+                        "newyork": {
+                            "value": 881903,
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">New-York</span><br />Population: 881903"
+                            }
+                        },
+                        "sydney": {
+                            "value": 695496,
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Sydney</span><br />Population: 695496"
+                            }
+                        },
+                        "brasilia": {
+                            "value": 392706,
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Brasilia</span><br />Population: 392706"
+                            }
+                        },
+                        "tokyo": {
+                            "value": 1491797,
+                            "tooltip": {
+                                "content": "<span style=\"font-weight:bold;\">Tokyo</span><br />Population: 1491797"
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Default plots params
+            var plots = {
+                "paris": {
+                    "latitude": 48.86,
+                    "longitude": 2.3444,
+                    "text": {
+                        "position": "left",
+                        "content": "Paris"
+                    },
+                    "href": "http://en.wikipedia.org/w/index.php?search=Paris"
+                },
+                "newyork": {
+                    "latitude": 40.667,
+                    "longitude": -73.833,
+                    "text": {
+                        "content": "New york"
+                    },
+                    "href": "http://en.wikipedia.org/w/index.php?search=New York"
+                },
+                "sydney": {
+                    "latitude": -33.917,
+                    "longitude": 151.167,
+                    "text": {
+                        "content": "Sydney"
+                    },
+                    "href": "http://en.wikipedia.org/w/index.php?search=Sidney"
+                },
+                "brasilia": {
+                    "latitude": -15.781682,
+                    "longitude": -47.924195,
+                    "text": {
+                        "content": "Brasilia"
+                    },
+                    "href": "http://en.wikipedia.org/w/index.php?search=Brasilia"
+                },
+                "tokyo": {
+                    "latitude": 35.687418,
+                    "longitude": 139.692306,
+                    "text": {
+                        "content": "Tokyo"
+                    },
+                    "href": "http://en.wikipedia.org/w/index.php?search=Tokyo"
+                }
+            };
+
+            // Mapael initialisation
+            $world = $(".container");
+            $world.mapael({
+                map: {
+                    name: "world_countries",
+                    defaultArea: {
+                        attrs: {
+                            fill: "#fff",
+                            stroke: "#232323",
+                            "stroke-width": 0.3
+                        },
+                        eventHandlers: {
+                            click: function (e, id, mapElem, textElem) {
+                                document.getElementsByTagName("opportunities-view")[0].show();
+                            }
+                        }
+                    },
+                    defaultPlot: {
+                        text: {
+                            attrs: {
+                                fill: "#b4b4b4",
+                                "font-weight": "normal"
+                            },
+                            attrsHover: {
+                                fill: "#fff",
+                                "font-weight": "bold"
+                            }
+                        },
+
+                        // eventHandlers: {
+                        //     click: function (e, id, mapElem, textElem) {
+                        //         // if (typeof elemOptions.myText != 'undefined') {
+                        //         //     $('.myText span').html(elemOptions.myText).css({display: 'none'}).fadeIn('slow');
+                        //         // }
+
+                        //         console.log('over');
+                        //     }
+                        // }
+                    },
+                    zoom: {
+                        enabled: false,
+                        step: 0.25,
+                        maxLevel: 20
+                        }
+                    },
+
+                // defaultArea: {
+                //             attrs: {
+                //                 fill: "#cccccc",
+                //                 stroke: "#cccccc"
+                //             },
+                //             eventHandlers: {
+                //                 click: function (e, id, mapElem, textElem) {
+                //                     document.getElementsByTagName("opportunities-view")[0].show();
+
+                //                 }
+                //             }
+                //         },
+
+
+                legend: {
+                    area: {
+                        display: false,
+                        title: "GDP",
+                        marginBottom: 7,
+                        slices: [
+                            {
+                                max: 5000000,
+                                attrs: {
+                                    fill: "#888888"
+                                },
+                                label: "Less than 5M"
+                            },
+                            {
+                                min: 5000000,
+                                max: 10000000,
+                                attrs: {
+                                    fill: "#cccccc"
+                                },
+                                label: "Between 5M and 10M"
+                            },
+                            {
+                                min: 10000000,
+                                max: 50000000,
+                                attrs: {
+                                    fill: "#efefef"
+                                },
+                                label: "Between 10M and 50M"
+                            },
+                            {
+                                min: 50000000,
+                                attrs: {
+                                    fill: "#dddddd"
+                                },
+                                label: "More than 50M"
+                            }
+                        ]
+                    },
+                    plot: {
+                        display: true,
+                        title: "GDP",
+                        marginBottom: 6,
+                        slices: [
+                            {
+                                type: "circle",
+                                max: 500000,
+                                attrs: {
+                                    fill: "#FD4851",
+                                    "stroke-width": 1
+                                },
+                                attrsHover: {
+                                    transform: "s1.5",
+                                    "stroke-width": 1
+                                },
+                                label: "Less than 500 000",
+                                size: 10
+                            },
+                            {
+                                type: "circle",
+                                min: 500000,
+                                max: 1000000,
+                                attrs: {
+                                    fill: "#FD4851",
+                                    "stroke-width": 1
+                                },
+                                attrsHover: {
+                                    transform: "s1.5",
+                                    "stroke-width": 1
+                                },
+                                label: "Between 500 000 and 1M",
+                                size: 20
+                            },
+                            {
+                                type: "circle",
+                                min: 1000000,
+                                attrs: {
+                                    fill: "#FD4851",
+                                    "stroke-width": 1
+                                },
+                                attrsHover: {
+                                    transform: "s1.5",
+                                    "stroke-width": 1
+                                },
+                                label: "More than 1M",
+                                size: 30
+                            }
+                        ]
+                    }
+                },
+                plots: $.extend(true, {}, data[2009]['plots'], plots),
+                areas: data[2009]['areas']
+            });
+        });
+
+
+                /*$(".container").mapael({
+                    map: {
+
+                        name: "world_countries",
+                        zoom: {
+                            enabled: true,
+                            maxLevel: 10
+                        },
+
+                        defaultArea: {
+                            attrs: {
+                                fill: "#cccccc",
+                                stroke: "#cccccc"
+                            },
+                            eventHandlers: {
+                                click: function (e, id, mapElem, textElem) {
+                                    document.getElementsByTagName("opportunities-view")[0].show();
+
+                                }
+                            }
+                        }
+
+
+                    },
+                    plots: {
+                        // Image plot
+                        'paris': {
+                            type: "image",
+                            url: "../../images/marker.png",
+                            width: 40,
+                            height: 40,
+                            latitude: 48.86,
+                            longitude: 2.3444,
+                            attrs: {
+                                opacity: 1
+                            },
+                            attrsHover: {
+                                transform: "s1.5"
+                            }
+                        }
+
+                    }
+
+
+                });*/
+
+
+                //anime.js code
+                var leftTailScanner = anime({
+                  targets: '.scanner .left-tail-scanner',
+                  translateX: {
+                    value: 2300,
+                    duration: 2000,
+                    easing: 'easeInOutSine'
+                  },
+                  delay: 250 // All properties except 'scale' inherit 250ms delay
+                });
+
+                var rightTailScanner = anime({
+                  targets: '.scanner .right-tail-scanner',
+                  translateX: {
+                    value: -2300,
+                    duration: 2000,
+                    easing: 'easeInOutSine'
+                  },
+                  delay: 2500 // All properties except 'scale' inherit 250ms delay
+                });
+
+
+                //change map opacity
+                setTimeout(function(){
+                    
+                    //remove scanner layer
+                    $('.scanner').remove();
+                    console.log('Remove Scanner Class');
+
+                    $('.container').addClass('container-after');
+
+
+                }, 4200);
+
+
+
+            },
+
+            onClick: function(text) {
+                console.log('click');
             }
 
 
@@ -206,4 +1820,5 @@
     </script>
 
 
+    </script>
 </dom-module>
