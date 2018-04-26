@@ -9,6 +9,26 @@
         :host {
             display: block;
         }
+        
+        .left-tail-scanner{
+            float: left;
+            position: absolute;
+            left: -200px;
+        }
+
+
+        .right-tail-scanner{
+            float: right;
+            position: absolute;
+            right: -200px;
+        }
+
+
+        .container-after{
+            transition: all 2s;
+            opacity: 1 !important;
+        }
+
     </style>
     <template>
 
@@ -36,13 +56,24 @@
             </ul>
         </div>
 
-        <div class="container" style="width: 100%; margin-top: 8px;">
-            <div class="map"></div>
+        <div class="container" style="    width: 100%;
+    position: fixed;
+    opacity: 0.35;
+    top: 50%;
+    transform: translateY(-40%);">
+            <div class="map" style=""></div>
+        </div>
+        <div class="scanner" style="position: absolute;height: 100vh;width: 100%;top: 0;">
+            <img src="../../images/left-tail-scanner.png" class="left-tail-scanner">
+            <img src="../../images/right-tail-scanner.png" class="right-tail-scanner">
         </div>
 
         <opportunities-view></opportunities-view>
 
     </template>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
     <script>
 
 
@@ -83,8 +114,8 @@
                         // Image plot
                         'paris': {
                             type: "image",
-                            url: "../../images/marker.png",
-                            width: 12,
+                            url: "images/marker.png",
+                            width: 40,
                             height: 40,
                             latitude: 48.86,
                             longitude: 2.3444,
@@ -100,11 +131,55 @@
 
 
                 });
+
+
+                //anime.js code
+                var leftTailScanner = anime({
+                  targets: '.scanner .left-tail-scanner',
+                  translateX: {
+                    value: 1600,
+                    duration: 2000,
+                    easing: 'easeInOutSine'
+                  },
+                  delay: 250 // All properties except 'scale' inherit 250ms delay
+                });
+
+                var rightTailScanner = anime({
+                  targets: '.scanner .right-tail-scanner',
+                  translateX: {
+                    value: -1600,
+                    duration: 2000,
+                    easing: 'easeInOutSine'
+                  },
+                  delay: 2500 // All properties except 'scale' inherit 250ms delay
+                });
+
+
+                //change map opacity
+                setTimeout(function(){
+                    
+                    //remove scanner layer
+                    $('.scanner').remove();
+                    console.log('Remove Scanner Class');
+
+                    $('.container').addClass('container-after');
+
+
+                }, 4200);
+
+
+
             }
 
 
         });
 
+    </script>
+
+    <script type="text/javascript">
+        
+        
+    </script>
 
 
     </script>
