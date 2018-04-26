@@ -3,7 +3,6 @@
 <link rel="import" href="../../bower_components/coral-button/coral-button.html">
 <link rel="import" href="opportunities-view.html">
 
-
 <dom-module id="map-page">
     <style>
         :host {
@@ -16,13 +15,11 @@
             left: -200px;
         }
 
-
         .right-tail-scanner{
             float: right;
             position: absolute;
             right: -200px;
         }
-
 
         .container-after{
             transition: all 2s;
@@ -35,13 +32,7 @@
 
     </style>
     <template>
-
         <nav style="background-color:rgb(77, 77, 77); width: 100%;">
-            <!-- <div style="width:30%; float: left;text-align: left;";><coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button></div>
-            <div style="width:40%; text-align: center; float: left;"><img src="../../images/ct_bright.png" style="width: 180px; height: 30px;"></div>
-            <div style="width:30%; float: right; text-align: right;";></div><coral-button style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button></div> -->
-
-
             <div style="width:30%; float: left;text-align: left;" ;>
                 <coral-button on-click="goOpportunities" style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
             </div>
@@ -51,10 +42,8 @@
             <div style="width:30%; float: right; text-align: right;" ;></div>
                 <coral-button on-click="goPortfolio" style="float: right; padding-right: 12px; padding-top: 3px;">PORTFOLIO</coral-button>
             </div>
-            
         </nav>
-        <div style="height: 50px; text-align: center; margin: 0 auto; width: 450px; position: relative;">
-
+        <div style="height: 100px; text-align: center; margin: 0 auto; width: 450px; position: relative;">
             <ul style="list-style-type: none; overflow: hidden; background-color: #333; text-align: center;">
                 <li style="float: left">
                     <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Region</a>
@@ -68,21 +57,25 @@
                 <li style="float: left">
                     <a style="display: inline-block; color: white; padding: 14px 16px; text-decoration: none;" href="#">Other Key Metric</a>
                 </li>
-
             </ul>
         </div>
 
-        <div id="mapContainer">
-            <div class="container" style="width: 100%;
-            position: fixed;
-            opacity: 0.35;
-            top: 50%;
-            transform: translateY(-40%);">
-                <div class="map"></div>
+        <div>
+            <div id="mapContainer">
+                <div class="container" style="width: 100%;
+                position: fixed;
+                opacity: 0.35;
+                top: 50%;
+                transform: translateY(-40%);">
+                    <div class="map"></div>
+                </div>
+            </div>
+
+            <div id="chartContainer" style="display: none;">
+                <chart-page></chart-page>
             </div>
         </div>
 
-        
         <div class="scanner" style="position: absolute;height: 100vh;width: 100%;top: 0;">
             <img src="../../images/left-tail-scanner.png" class="left-tail-scanner">
             <img src="../../images/right-tail-scanner.png" class="right-tail-scanner">
@@ -90,17 +83,9 @@
 
         <opportunities-view></opportunities-view>
 
-        <div id="chartContainer" style="display: none;">
-            <chart-page></chart-page>
-        </div>
-
     </template>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
     <script>
-
-
         Polymer({
             is: 'map-page',
             properties: {
