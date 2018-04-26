@@ -1,0 +1,79 @@
+
+
+
+<dom-module id="company-table">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style> 
+    
+    <table is="coral-table">
+      <thead>
+        <tr>
+          <th>[[sector]]</th>
+          <!-- <th text-right>EPS</th>
+          <th text-right>Price Ratio</th>
+          <th text-right>Relative Valuation</th>
+          <th text-right>Book Value Per Share</th> -->
+        </tr>
+        <tr>
+          <th>Company</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template is="dom-repeat" items="{{content}}">
+          <tr id$="[[item.ric]]">
+              <td class="ric table-text">[[item.display]]</td>
+              <td class="lastPrice table-text align-right"></td>
+              <!-- <td class="closePrice table-text align-right"></td> -->
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+
+
+
+    <!-- <div class="table-responsive">
+        <table class="data-table table">
+            <thead>
+                <th class="table-header">THAILAND GOVT DEBT</th>
+                <th class="table-header align-right">LAST</th>
+                <th class="table-header align-right">HISTORICAL CLOSE</th>
+            </thead>
+            <tbody>
+                <template is="dom-repeat" items="{{content}}">
+                    <tr id$="[[item.ric]]">
+                        <td class="ric table-text">[[item.display]]</td>
+                        <td class="lastPrice table-text align-right"></td>
+                        <td class="closePrice table-text align-right"></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div> -->
+
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: 'company-table',
+
+    properties: {
+      sector: String,
+      content: Array
+    },
+
+    addData: function(data, ric, field) {
+      var cell = document.getElementById(ric).querySelector('.'+field);
+      cell.innerHTML = data;
+      console.log(cell);        
+    }
+  });
+
+</script>

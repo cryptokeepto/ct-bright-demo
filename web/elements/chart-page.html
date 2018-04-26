@@ -1,0 +1,282 @@
+
+
+
+<link rel="import" href="realtime-data.html">
+<link rel="import" href="bond-table.html">
+<link rel="import" href="company-table.html">
+
+<dom-module id="chart-page">
+<template>
+  <style>
+    :host {
+      display: block;
+    }
+   
+  </style>
+
+
+  <realtime-data
+    rics="[[_computeRics(bonds)]]"
+    fields="[[bondFields]]">
+  </realtime-data>
+
+  <div>
+    <sapphire-donut id="portfolioChart" style="height: 350px;" on-item-select="onItemSelect"></sapphire-donut>
+  </div>
+
+  <div>
+    <company-table id="companyList" sector="[[selectedSector]]" content="[[bonds]]"></company-table>
+  </div>
+
+
+  <div>
+    <table is="coral-table">
+      <thead>
+        <tr>
+          <th>[[selectedSector]]</th>
+          <!-- <th text-right>EPS</th>
+          <th text-right>Price Ratio</th>
+          <th text-right>Relative Valuation</th>
+          <th text-right>Book Value Per Share</th> -->
+        </tr>
+        <tr>
+          <th>dfjslfjs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GOOG.O</td>
+          <!-- <td>Google Inc</td>
+          <td text-right>21.81</td>
+          <td text-right>4.80%</td>
+          <td text-right>12.23</td>
+          <td text-right>1.45</td> -->
+        </tr>
+        <tr>
+          <td>FB.OQ</td>
+          <!-- <td>Facebook Inc</td>
+          <td text-right>34.57</td>
+          <td text-right>8.34%</td>
+          <td text-right>3.53</td>
+          <td text-right>2.54</td> -->
+        </tr>
+        <tr>
+          <td>EBAY.OQ</td>
+          <!-- <td>eBay Inc</td>
+          <td text-right>13.43</td>
+          <td text-right>3.67%</td>
+          <td text-right>15.68</td>
+          <td text-right>4.67</td> -->
+        </tr>
+        <tr>
+          <td>MSFT.O</td>
+          <!-- <td>Microsoft Corp</td>
+          <td text-right>17.93</td>
+          <td text-right>2.34%</td>
+          <td text-right>21.48</td>
+          <td text-right>3.73</td> -->
+        </tr>
+        <tr>
+          <td>AMZN.OQ</td>
+          <!-- <td>Amazon Inc</td>
+          <td text-right>19.75</td>
+          <td text-right>3.30%</td>
+          <td text-right>17.23</td>
+          <td text-right>4.94</td> -->
+        </tr>
+      </tbody>
+      </table>
+  </div>
+  
+
+</template>
+<script>
+
+  
+  Polymer({
+    is: 'chart-page',
+    properties: {
+
+      tableData: {
+        type: Object,
+        value: function() {
+          return {
+            'foodAndBeverage': [
+              {ric:'IBM.N', display:'IBM'},
+              {ric:'TRI.N', display:'TR'}
+            ],
+            'retail': [
+              {ric:'WMT', display:'Walmarts'},
+              {ric:'TSCO.L', display:'Tesco'}
+            ]
+          }
+        }
+      }
+
+    },
+
+    listeners: {
+           'realtime-data-update': '_onBondsDataUpdate',
+      },
+    
+
+    ready: function() {
+        
+
+        
+      },
+
+    attached: function() {
+      this.drawChart();      
+
+
+      this.bonds = [
+                    {ric:'TH1YT=RR', display:'1Y'},
+                    {ric:'TH2YT=RR', display:'2Y'},
+                    {ric:'TH3YT=RR', display:'3Y'},
+                    {ric:'TH5YT=RR', display:'5Y'},
+                    {ric:'TH7YT=RR', display:'7Y'},
+                    {ric:'TH10YT=RR', display:'10Y'},
+                    {ric:'TH14YT=RR', display:'14Y'},
+                    {ric:'TH16YT=RR', display:'16Y'},
+                    {ric:'TH20YT=RR', display:'20Y'},
+                ];
+
+        
+              this.bondFields = [
+                  'CF_LAST',
+                  //'CF_CLOSE'
+              ];
+
+    },
+
+    drawChart: function() {
+      var el = document.getElementById('portfolioChart');
+        el.data = {
+          'options': {
+            'title': 'Portfolio By Sectors',
+            'showLegend': true
+          },
+          'root': {
+            'label': 'CPALL',
+            'children': [
+              {
+                'id': 'foodAndBeverage',
+                'label': 'Food & Beverage',
+                'size': 25,
+                'backgroundColor': '#C13018'
+              },
+              {
+                'id': 'retail',
+                'label': 'Retail',
+                'size': 25,
+                'backgroundColor': '#F36F13'
+              },
+              {
+                'label': 'Agriculture',
+                'size': 25,
+                'backgroundColor': '#EBCB38'
+              },
+              {
+                'label': 'Telecom',
+                'size': 25,
+                'backgroundColor': '#CCCC00'
+              },
+              // {
+              //   'label': 'Spain',
+              //   'size': 1075.6,
+              //   'backgroundColor': '#A2B969'
+              // },
+              // {
+              //   'label': 'Netherlands',
+              //   'size': 676.5,
+              //   'backgroundColor': '#0D95BC'
+              // },
+              // {
+              //   'label': 'Others',
+              //   'size': 3522.5,
+              //   'backgroundColor': '#335D7E'
+              // }
+            ]
+          }
+        };
+    },
+
+    onItemSelect: function(e, detail) {
+      console.log('sector selected', detail.item.id);
+
+      this.stopSubscription();
+      var id = detail.item.id;
+
+      this.bonds = this.tableData[id];
+
+      this.startSubscription();
+
+    },
+
+    startSubscription: function() {
+      var elements = Polymer.dom(this.root).querySelectorAll('realtime-data');
+
+      for (var index = 0; index < elements.length; index++) {
+        var item = elements[index];
+
+        item.startSubscription(index);
+        
+      }
+    },
+
+    stopSubscription: function() {
+      var elements = Polymer.dom(this.root).querySelectorAll('realtime-data');
+
+      for (var index = 0; index < elements.length; index++) {
+        var item = elements[index];
+
+        item.stopSubscription(index);
+        
+      }
+    },
+
+    _computeRics: function(indices) {
+        var rics = [];
+
+        for (var index = 0; index < indices.length; index++) {
+          rics.push(indices[index].ric);
+          
+        }
+
+        return rics;
+      },
+
+      _onBondsDataUpdate: function(e) {
+        var realtime = e.detail.value;
+
+        var el = Polymer.dom(this.root).querySelector('company-table');
+
+        if (el) {
+          var data = realtime.data;
+
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            switch(key) {
+                case 'CF_LAST':
+                    //el.lastPrice = data[key].formatted;
+                    el.addData(data[key].formatted, realtime.ric, 'lastPrice');
+                    break;
+                case 'CF_CLOSE':
+                    //el.histClose = data[key].formatted;
+                    //el.addData(data[key].formatted, realtime.ric, 'closePrice');
+                    break;
+                default:
+                    
+            }
+          }
+        }
+        }
+      }
+
+
+    
+  });
+
+</script>
+</dom-module>
