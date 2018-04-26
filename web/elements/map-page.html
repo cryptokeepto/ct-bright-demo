@@ -33,7 +33,7 @@
         <header>
             <nav style="background-color:rgb(77, 77, 77); width: 100%;">
                 <div style="width:30%; float: left;text-align: left;" ;>
-                    <coral-button selected style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
+                    <coral-button on-click="goOpportunities" style="float: left; padding-left: 12px; padding-top: 3px;">OPPORTUNITIES</coral-button>
                 </div>
                 <div style="width:40%; text-align: center; float: left;">
                     <img src="../../images/ct_bright.png" style="width: 180px; height: 30px;">
@@ -184,12 +184,20 @@
                 // mapContainer
                 var mapContainer = document.getElementById("mapContainer");
                 mapContainer.style.display = "none";
-                console.log(mapContainer)
+            
                 // chartContainer
                 var chartContainer = document.getElementById("chartContainer");
                 chartContainer.style.display = "block";
-                console.log(chartContainer)
                         
+            },
+
+            goOpportunities: function() {
+                var mapContainer = document.getElementById("mapContainer");
+                mapContainer.style.display = "block";
+
+                // chartContainer
+                var chartContainer = document.getElementById("chartContainer");
+                chartContainer.style.display = "none";
             }
 
 
