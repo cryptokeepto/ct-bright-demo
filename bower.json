@@ -1,7 +1,7 @@
 {
-  "name": "scb",
+  "name": "ct-bright-demo",
   "authors": [
-    "Veerayut Intorn"
+    ""
   ],
   "description": "",
   "main": "",
@@ -18,11 +18,9 @@
     "coral-button": "^1.0.40",
     "quartz-layout": "^1.1.7",
     "carbon-sidebar-layout": "^1.1.5",
-    "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
     "moment": "^2.18.1",
     "sapphire-chart": "^1.0.55",
-    "coral-flag": "^1.0.8",
     "jet-api": "^2.3.0",
     "jet-plugin-settings": "^2.0.6",
     "jet-plugin-quotes": "^2.1.1",
@@ -35,6 +33,8 @@
     "opal-company-header": "^2.0.3",
     "opal-company-recommendations": "^1.0.43",
     "opal-company-peers": "^2.0.1",
-    "coral-icon": "^1.0.35"
+    "coral-icon": "^1.0.35",
+    "sapphire-donut": "^1.0.24",
+    "coral-table": "^1.0.22"
   }
 }

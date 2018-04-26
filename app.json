@@ -1,6 +1,6 @@
 {
   "name": "ct-bright-demo",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "WebApp",
   "displayName": "ct-bright-demo",
   "defaultPage": "index.html",
