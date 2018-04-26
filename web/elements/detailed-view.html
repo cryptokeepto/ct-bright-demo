@@ -1,30 +1,33 @@
 <dom-module id="detailed-view">
+
     <template>
         <div>
             <opal-company-header ric="[[ric]]"></opal-company-header>
         </div>
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        <opal-business-summary ric="[[ric]]"></opal-business-summary>
-                    </td>
-                    <td>
-                        <opal-company-fundamentals ric="[[ric]]"></opal-company-fundamentals>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-              
-                            <opal-company-peers ric="[[ric]]"></opal-company-peers>
-                        <!-- <opal-company-recommendations ric="[[ric]]"></opal-company-recommendations> -->
-                    </td>
-                    <td>
-                        <sapphire-chart></sapphire-chart>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+
+
+        <quartz-layout flex container>
+
+            <quartz-layout flex noflex nowrap>
+                <quartz-layout style="width: 554px;">
+                    <opal-business-summary ric="[[ric]]"></opal-business-summary>
+                </quartz-layout>
+                <quartz-layout style="width: 554px;">
+                    <opal-company-fundamentals ric="[[ric]]"></opal-company-fundamentals>
+                </quartz-layout>
+            </quartz-layout>
+
+            <quartz-layout flex noflex nowrap>
+                <quartz-layout style="width: 554px;">
+                    <opal-company-peers ric="[[ric]]"></opal-company-peers>
+                </quartz-layout>
+                <quartz-layout style="width: 554px;">
+                    <sapphire-chart id="line"></sapphire-chart>
+                </quartz-layout>
+            </quartz-layout>
+
+        </quartz-layout>
 
     </template>
 </dom-module>
@@ -43,10 +46,47 @@
 
         },
 
+        ready: function () {
+
+        },
+
 
 
         show: function () {
-
+            var line = document.getElementById('line');
+            line.config = {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    datasets: [{
+                        label: 'Price',
+                        data: [37.4, 36.6, 40.48, 41.13, 42.05, 40.42, 43.09]
+                    }]
+                },
+                options: {
+                    title: {
+                        text: 'Line Chart - Price of TRI.N in 2016'
+                    },
+                    legend: {
+                        display: false // not display legend
+                    },
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Price ($)'
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                return tooltipItem.yLabel + ' $';
+                            }
+                        }
+                    }
+                }
+            };
         }
 
 

@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "coral-button": "^1.0.40",
-    "quartz-layout": "^1.1.4",
+    "quartz-layout": "^1.1.7",
     "carbon-sidebar-layout": "^1.1.5",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
@@ -34,6 +34,7 @@
     "opal-company-fundamentals": "^1.0.35",
     "opal-company-header": "^2.0.3",
     "opal-company-recommendations": "^1.0.43",
-    "opal-company-peers": "^2.0.1"
+    "opal-company-peers": "^2.0.1",
+    "coral-icon": "^1.0.35"
   }
 }

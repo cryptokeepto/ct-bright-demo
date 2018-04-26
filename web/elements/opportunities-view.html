@@ -1,12 +1,9 @@
-
 <dom-module id="opportunities-view">
     <template>
-        <coral-popup-panel id="opportunities" modal width="80%" height="80%" style="padding: 10px;">
-            <template is="dom-if" if="[[_computeView(view)]]">
-                <div id="container-wrapper">
-                    <emerald-grid id="initgrid"></emerald-grid>
-                </div>
-            </template>
+        <coral-popup-panel id="opportunities" auto-hide modal width="80%" height="80%" style="padding: 10px;" on-popup-hide="onPopupHide">
+            <div id="container-wrapper">
+                <!-- <emerald-grid id="initgrid"></emerald-grid> -->
+            </div>
         </coral-popup-panel>
 
     </template>
@@ -22,8 +19,7 @@
         properties: {
             tableView: {
                 type: Boolean,
-                value: true,
-                //observer: '_onTableViewChanged'
+                value: true
             },
 
             selectedRic: String,
@@ -34,23 +30,32 @@
             }
         },
 
-        // _onTableViewChanged: function() {
-        //     if (this.tableView == true) {
-        //         this.addDataToTable();
-        //     }
 
-        // },
 
-        _computeView: function (view) {
-            var result = view == 'table' ? true : false;
-            return result;
+
+
+        onPopupHide: function () {
+            if (Polymer.dom(this.root).querySelector('detailed-view') !== null) {
+                const detailed = Polymer.dom(this.root).querySelector('detailed-view');
+                Polymer.dom(this.root).querySelector('div').removeChild(detailed)
+            }
+
+            if (Polymer.dom(this.root).querySelector('emerald-grid') !== null) {
+
+                const emerald = Polymer.dom(this.root).querySelector('emerald-grid');
+                Polymer.dom(this.root).querySelector('div').removeChild(emerald)
+
+            }
         },
 
         show: function () {
             this.$.opportunities.show();
-            // this.tableView = true;
+            var emeraldEle = document.createElement("emerald-grid");
+            emeraldEle.setAttribute("id", "initgrid");
+            console.log(emeraldEle);
+            document.getElementById("container-wrapper").appendChild(emeraldEle);
+            // Polymer.dom(this.root).querySelector('div').appendChild(emeraldEle);
             this.addDataToTable();
-
             this.$$('#initgrid').api.listen("cellClicked", function (e) {
                 var dataRow = e.dataRow.Ric;
                 this.selectedRic = dataRow;
@@ -60,6 +65,7 @@
                 var detailedView = document.createElement("detailed-view");
                 detailedView.setAttribute("ric", this.selectedRic);
                 document.querySelector("#container-wrapper").appendChild(detailedView);
+                detailedView.show();
             }.bind(this))
         },
 
